@@ -1,0 +1,41 @@
+// move to blue mogo for distance sensor measured value
+okapi::QLength getBack(distance_back.get() -20);  // converts mm into Qlength
+drive(-getBack); // drive for QLength
+
+//slows down and approach, stops when back limit is pressed
+while(!limit_back.isPressed())
+{
+  driveRight->moveVelocity(-10);
+  driveLeft->moveVelocity(-10);
+  pros::delay(30);
+}
+//stops and lifts backlift to obtain blue mogo
+stop();
+rearLiftController->setTarget(340);
+rearLiftController->waitUntilSettled();
+
+// turns towards the yellow mogo
+turn(90_deg, 1.0);
+// drives to the yellow mogo
+drive(48_in);
+// approaches a while
+driveRight->moveVelocity(10);
+driveLeft->moveVelocity(10);
+pros::delay(300);
+// clamps frontlift
+piston_front.set_value(true);
+pros::delay(100);
+// Elevates front lift to make space for the rings to be intaked
+while (frontLift_sensor.get()<=20){
+  motor_frontLift->moveVelocity(50);
+}
+//Align with rings on the right side
+drive(10_in);
+turn(90_deg,1.0);
+//intake some rings
+motor_conveyer->moveVelocity(200);
+drive(20_in);
+//backs to zone
+drive(-10_in);
+turn(-70_deg,1.0);
+drive(-72_in);
