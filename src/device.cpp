@@ -26,7 +26,8 @@ namespace global{
   okapi::ADIEncoder encoder_middle({6, 3, 4}, false);
   okapi::ADIButton limit_back('Z');
   //okapi::DistanceSensor distance_back = okapi::DistanceSensor(8);
-  okapi::RotationSensor frontLift_sensor = okapi::RotationSensor(18);
+  okapi::RotationSensor encoder_lift = okapi::RotationSensor(18);
+
   pros::IMU imu(9);
   pros::ADIDigitalOut piston_front('A');
   pros::ADIDigitalOut piston_rearFetch('B');

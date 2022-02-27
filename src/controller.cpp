@@ -12,8 +12,8 @@ namespace global{
   std::shared_ptr<okapi::AsyncPositionController<double, double>> rearLiftController;
   std::shared_ptr<okapi::AsyncPositionController<double, double>> frontLiftController;
   std::shared_ptr<okapi::AsyncPositionController<double, double>> conveyerController;
-
-  okapi::IterativePosPIDController::Gains distance_gain[3] = {{0.000680, -0.000040, -0.000130}, {0.000680, -0.000040, -0.000130}, {0.000680, -0.000040, -0.000130} };
+//0.000480, -0.0000000, -0.000135
+  okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.000680, -0.000040, -0.000130}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020} };
   okapi::IterativePosPIDController::Gains turn_gain = {0.007500, 0.001500, 0.000015};
   okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
 
@@ -36,15 +36,16 @@ namespace global{
     )
     .withClosedLoopControllerTimeUtil()
     .buildOdometry();
+
   }
   void build_pid()
   {
     // const double drivingKp = 0.001040;
     // const double drivingKi = -0.000070;
     // const double drivingKd = -0.000230;
-    const double drivingKp = 0.000680;
-    const double drivingKi = -0.000040;
-    const double drivingKd = -0.000130;
+    const double drivingKp = 0.000370;
+    const double drivingKi = -0.000010;
+    const double drivingKd = -0.00020;
     leftDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
     rightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
     //straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0001, 0.0, 0.00001));
@@ -61,7 +62,7 @@ namespace global{
   void build_component()
   {
     //rearLiftController = okapi::AsyncPosControllerBuilder().withMotor(*motor_rear).withMaxVelocity(100).withGearset(gearset_lift).build();
-    frontLiftController = okapi::AsyncPosControllerBuilder().withMotor(*motor_frontLift).withMaxVelocity(100).withGearset(gearset_lift).build();
+    frontLiftController = okapi::AsyncPosControllerBuilder().withMotor(*motor_frontLift).withSensor(std::make_shared<okapi::RotationSensor>(encoder_lift)).withMaxVelocity(100).withGearset(gearset_lift).build();
     conveyerController = okapi::AsyncPosControllerBuilder().withMotor(*motor_conveyer).withMaxVelocity(600).withGearset(gearset_conveyer).build();
   }
 }

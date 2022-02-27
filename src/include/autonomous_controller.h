@@ -12,6 +12,8 @@ namespace global{
   extern void stop();
   extern void conveyerUp();
   extern void conveyerDown();
+  extern void liftUp();
+  extern void liftDown();
   extern void drive(okapi::QLength targetDistance);
   extern void drive(okapi::QLength targetDistance, unsigned int withMogo);
   extern void driveAndApproach(okapi::QLength targetDistance);

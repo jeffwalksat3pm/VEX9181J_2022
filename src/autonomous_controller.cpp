@@ -28,11 +28,13 @@ namespace global{
     piston_rearClinch.set_value(false);
     pros::delay(100);
   }
-  void liftObj(double target)
+  void liftUp()
   {
-    piston_front.set_value(true);
-    pros::delay(200);
-    frontLiftController->setTarget(target);
+    frontLiftController->setTarget(630);
+  }
+  void liftDown()
+  {
+    frontLiftController->setTarget(0);
   }
   void conveyerUp()
   {
@@ -79,7 +81,7 @@ namespace global{
     double cm = targetDistance.convert(centimeter);
     double degrees = (cm / circumference) * 360.0;
 
-    double tune = degrees > 0 ? 1 : 0.9;
+    double tune = degrees > 0 ? 1 : 0.98;
     // Set targets
     leftDriveController->setTarget(degrees);
     rightDriveController->setTarget(degrees);
@@ -140,6 +142,9 @@ namespace global{
   {
     leftDriveController->setGains(distance_gain[withMogo]);
     rightDriveController->setGains(distance_gain[withMogo]);
+    drive(targetDistance);
+    leftDriveController->setGains(distance_gain[0]);
+    rightDriveController->setGains(distance_gain[0]);
   }
   void driveAndApproach(QLength targetDistance)
   {

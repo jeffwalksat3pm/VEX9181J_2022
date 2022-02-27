@@ -8,6 +8,8 @@ namespace global{
   okapi::ControllerButton conveyer_down(okapi::ControllerDigital::L1);
   okapi::ControllerButton piston_toggle(okapi::ControllerDigital::A);
   okapi::ControllerButton resetByHand(okapi::ControllerDigital::B);
+  okapi::ControllerButton liftPlatform(okapi::ControllerDigital::X);
+  okapi::ControllerButton modeChange(okapi::ControllerDigital::Y);
   void configure_master() {
 
     //masterController = new okapi::Controller();

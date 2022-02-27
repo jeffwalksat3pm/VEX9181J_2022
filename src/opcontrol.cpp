@@ -11,7 +11,7 @@ const int FRONTLIFT_DOWN = 20;
 bool isToggled = false;
 bool isFetch = false;
 bool isClinch = false;
-
+bool isChangedMaxVelocity = false;
 void test();
 void test1();
 double returnOnlyPostitive(double val);
@@ -19,18 +19,18 @@ double returnOnlyNegative(double val);
 void redAMajor_test();
 void opcontrol()
 {
-  redAMajor_test();
-  //test1(); // test function; dead loop
+  //redAMajor_test();
+  //test(); // test function; dead loop
   while (true) {
-    pros::lcd::set_text(1, std::to_string(imu.get_heading()));
+    pros::lcd::set_text(1, std::to_string(encoder_lift.get()));
     pros::lcd::set_text(2, std::to_string(drive_encoder_right.get()));
     pros::lcd::set_text(3, std::to_string(encoder_right.get()));
     int i = 0;
-    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY),
-                              masterController->getAnalog(okapi::ControllerAnalog::leftX));
+    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.9,
+                              masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.65) ;
 
     if (i %20 == 0) {
-      masterController->setText(1, 1, std::to_string(frontLift_sensor.get()));
+      masterController->setText(1, 1, std::to_string(encoder_lift.get()));
     }
 //backlift toggle; R1/R2 Assigned
     // if(rearLift_up.changedToPressed()||rearLift_down.changedToPressed())
@@ -45,26 +45,27 @@ void opcontrol()
     //   }
     // }
 //frontlift right analog
-    if (frontLift_sensor.get()>=5&& frontLift_sensor.get()<=90){
-      motor_frontLift->moveVelocity(masterController->getAnalog(okapi::ControllerAnalog::rightY)*100);
-    } else if (frontLift_sensor.get()<=5){
-      motor_frontLift->moveVelocity(returnOnlyPostitive(masterController->getAnalog(okapi::ControllerAnalog::rightY)*100));
-    } else if (frontLift_sensor.get()>=90){
-      motor_frontLift->moveVelocity(returnOnlyNegative(masterController->getAnalog(okapi::ControllerAnalog::rightY)*100));
+  if(liftPlatform.isPressed())
+  {
+    frontLiftController->setTarget(480);
+  }
+  else
+  {
+    if (encoder_lift.get()>=5&& encoder_lift.get()<=90){
+      motor_frontLift->moveVoltage(masterController->getAnalog(okapi::ControllerAnalog::rightY)*12000);
+    } else if (encoder_lift.get()<=5){
+      motor_frontLift->moveVoltage(returnOnlyPostitive(masterController->getAnalog(okapi::ControllerAnalog::rightY)*12000));
+    } else if (encoder_lift.get()>=90){
+      motor_frontLift->moveVoltage(returnOnlyNegative(masterController->getAnalog(okapi::ControllerAnalog::rightY)*12000));
     } else {
       pros::lcd::set_text(4, "Front lift val out of bounds!");
     }
+  }
+
 
 //intakes all time until outtake L1 pressed, reverts back when released.
 //Will not move while front lift is not high over set val
-    if(frontLift_sensor.get() >= 20) {
-      if(conveyer_down.isPressed())
-      {
-        motor_conveyer->moveVelocity(-0.8 * 600);
-      }
-      else
-      motor_conveyer->moveVelocity(0.8 * 600);
-    } else {
+
       if (conveyer_up.isPressed())
       {
         motor_conveyer->moveVelocity(0.8 * 600);
@@ -74,8 +75,20 @@ void opcontrol()
         motor_conveyer->moveVelocity(-0.8 * 600);
       }
       else
-      motor_conveyer->moveVelocity(0);
-    }
+      {
+        if(encoder_lift.get()>15)
+        {
+          motor_conveyer->moveVelocity(0.65 * 600);
+        }
+        else
+          motor_conveyer->moveVelocity(0);
+      }
+
+      if(modeChange.changedToPressed())
+      {
+        chassis_odom->setMaxVelocity(isChangedMaxVelocity ? 160 : 200);
+        isChangedMaxVelocity = !isChangedMaxVelocity;
+      }
 //toggles piston A
     if(piston_toggle.changedToPressed()){
       if(isToggled) //toggle: double press button
@@ -102,6 +115,7 @@ void opcontrol()
         isFetch = true;
       }
     }
+
     // if(rearClinch.changedToPressed()){
     //   if(isClinch) //toggle: double press button
     //   {
@@ -131,13 +145,21 @@ void opcontrol()
 
 void test()
 {
-  turn(180_deg);
+  frontIn();
+  // backIn();
+  pros::delay(300);
+  liftUp();
+  pros::delay(3000);
+  drive(60_in, 3);
+  // drive(-50_in, 3);
+  // drive(30_in, 3);
+  // frontLiftController->waitUntilSettled();
   // pros::lcd::set_text(3, std::to_string(imu.get()));
-  while(1)
-  {
-    // pros::lcd::set_text(3, std::to_string(imu.get()));
-    pros::delay(10);
-  }
+  // while(1)
+  // {
+  //   // pros::lcd::set_text(3, std::to_string(imu.get()));
+  //   pros::delay(10);
+  // }
 }
 double returnOnlyPostitive(double val){
   if (val<=0) {
@@ -183,7 +205,6 @@ void redAMajor_test()
   // drive(-35_in);
   // frontOut();
   // drive(-3_in);
-  turnTo(170_deg, 0);
   // driveWithLeft(-31.5_in);
   // pros::delay(200);
   // drive(-13_in);

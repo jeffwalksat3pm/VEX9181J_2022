@@ -13,6 +13,8 @@ namespace global{
   extern okapi::ControllerButton conveyer_down;
   extern okapi::ControllerButton piston_toggle;
   extern okapi::ControllerButton resetByHand;
+  extern okapi::ControllerButton liftPlatform;
+  extern okapi::ControllerButton modeChange;
   extern void configure_master();
 }
 
