@@ -16,10 +16,8 @@ void test();
 void test1();
 double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
-void redAMajor_test();
 void opcontrol()
 {
-  //redAMajor_test();
   //test(); // test function; dead loop
   while (true) {
     pros::lcd::set_text(1, std::to_string(encoder_lift.get()));
@@ -145,7 +143,7 @@ void opcontrol()
 
 void test()
 {
-  frontIn();
+  // frontIn();
   // backIn();
   pros::delay(300);
   liftUp();
@@ -191,37 +189,4 @@ void test1()
   drive(42_in);
   piston_front.set_value(true);
   pros::delay(1000);
-}
-void redAMajor_test()
-{
-  // driveLeft->moveVelocity(200);
-  // driveRight->moveVelocity(200);
-  // pros::delay(900);
-  //
-  // stop();
-  // pros::delay(300);
-  // frontIn();
-  // pros::delay(300);
-  // drive(-35_in);
-  // frontOut();
-  // drive(-3_in);
-  // driveWithLeft(-31.5_in);
-  // pros::delay(200);
-  // drive(-13_in);
-  // backIn();
-  // pros::delay(100);
-  // drive(7_in);
-  //
-  // turn(-20_deg, 1);
-  // conveyerUp();
-  //
-  // driveLeft->moveVelocity(70);
-  // driveRight->moveVelocity(70);
-  // pros::delay(500);
-  // // drive(-12_in);
-  // // driveLeft->moveVelocity(30);
-  // // driveRight->moveVelocity(30);
-  // // pros::delay(600);
-  stop();
-  while(1){}
 }

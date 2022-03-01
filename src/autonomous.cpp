@@ -2,67 +2,97 @@
 using namespace global;
 using namespace okapi::literals;
 
+void AMinor();
+void AMajor();
+
 void autonomous()
 {
-
-  drive(40_in);
-  while(1)
-  {
-    pros::lcd::set_text(1, std::to_string(encoder_left.get()));
-    pros::lcd::set_text(2, std::to_string(encoder_right.get()));
-    pros::lcd::set_text(3, std::to_string(encoder_middle.get()));
-    pros::delay(30);
+  // AMajor();
+  AMinor();
   }
-  //right side auto
-  // piston_front.set_value(false);// clamp
-  // drive(48_in);
-  // driveRight->moveVoltage(2400);
-  // driveLeft->moveVoltage(2400);
-  // pros::delay(700);
-  // piston_front.set_value(true);// clamp
-  // pros::delay(100);
-  // drive(-50_in);
-  //go to diagonal position of yellow mogo
-  // drive(47.5_in);//fwd
-  // turn(45_deg,1.0);//turn
-  // drive(3_in);//goto mogo
-  // piston_front.set_value(true);// clamp
-  // pros::delay(100);//wait til clamp clamps
-  // //revert back to original pos
-  // drive(-17_in);
-  // turn(-45_deg,1.0);//turn
-  // drive(-40_in);
-  // //turn and get the backmogo
-  // turn(-90_deg, 1.0);
-  // okapi::QLength getBack(distance_back.get() -20);  // get back sensor value by mm and converts into Qlength
-  // drive(-getBack); // drive back for QLength
-  //
-  // //slows down and approach, stops when back limit is pressed
-  // // while(!limit_back.isPressed())
-  // // {
-  // //   driveRight->moveVelocity(-10);
-  // //   driveLeft->moveVelocity(-10);
-  // //   pros::delay(30);
-  // // }
-  // driveRight->moveVelocity(-10);
-  // driveLeft->moveVelocity(-10);
-  // pros::delay(300);
-  //
-  // //stops and lifts backlift to obtain blue mogo
-  // stop();
-  //
-  // rearLiftController->setTarget(340);
-  // rearLiftController->waitUntilSettled();
-  // //might be at the platform, drive away
-  // drive(10_in);
-  // //elevate front lifts
-  // // Elevates front lift to make space for the rings to be intaked
-  // while (frontLift_sensor.get()<=20){
-  //   motor_frontLift->moveVelocity(50);
-  // }
-  // //score rings to backmogo
-  // motor_conveyer->moveVelocity(200);
-  // pros::delay(1000);
-  // motor_conveyer->moveVelocity(0);
 
-}
+  void AMajor(){
+    driveLeft->moveVelocity(192);
+    driveRight->moveVelocity(200);
+    pros::delay(750);
+
+    stop();
+    pros::delay(750);
+    frontIn();
+    pros::delay(100);
+
+    drive(-32_in);
+    frontOut();
+    drive(-4_in);
+    // pros::delay(200);
+    driveWithLeft(-44_in);
+    drive(-5_in);
+    backIn();
+    conveyerUp();
+    liftUp();
+    pros::delay(500);
+    drive(23_in);
+    stop();
+    pros::delay(200);
+    while(1){
+      conveyerDown();
+      driveLeft->moveVelocity(-80);
+      driveRight->moveVelocity(-80);
+      pros::delay(370);
+      conveyerUp();
+      pros::delay(300);
+      stop();
+      pros::delay(200);
+      driveLeft->moveVelocity(80);
+      driveRight->moveVelocity(80);
+      pros::delay(670);
+      stop();
+      pros::delay(200);
+    }
+  }
+
+  void AMinor(){
+    drive(-6_in);
+    pros::delay(370);
+    backIn();
+    liftUp();
+    pros::delay(300);
+    conveyerUp();
+    turn(20_deg);
+    conveyerDown();
+    pros::delay(500);
+    conveyerUp();
+    driveWithLeft(31_in);
+    pros::delay(400);
+    driveLeft->moveVelocity(96);
+    driveRight->moveVelocity(100);
+    pros::delay(1500);
+    drive(-5_in);
+    driveLeft->moveVelocity(96);
+    driveRight->moveVelocity(100);
+    pros::delay(1100);
+    motor_conveyer->moveVelocity(0);
+    stop();
+    motor_frontLift->moveVelocity(-20);
+    pros::delay(400);
+    motor_frontLift->moveVelocity(0);
+    driveLeft->moveVelocity(48);
+    driveRight->moveVelocity(50);
+    pros::delay(800);
+    frontIn();
+    pros::delay(500);
+    stop();
+    pros::delay(200);
+    driveLeft->moveVelocity(-192);
+    driveRight->moveVelocity(-200);
+    pros::delay(900);
+    stop();
+    pros::delay(300);
+    frontOut();
+    pros::delay(300);
+    liftUp();
+    conveyerUp();
+    drive(-7_in);
+    backOut();
+    drive(3_in);
+  }

@@ -38,11 +38,11 @@ namespace global{
   }
   void conveyerUp()
   {
-    motor_conveyer->moveVelocity(0.88 * 600);
+    motor_conveyer->moveVelocity(0.95 * 600);
   }
   void conveyerDown()
   {
-    motor_conveyer->moveVelocity(0);
+    motor_conveyer->moveVelocity(0.30 * -600);
   }
   // void startup()
   // {
