@@ -2,13 +2,18 @@
 using namespace global;
 using namespace okapi::literals;
 
-void AMinor();
+void redAMinor();
 void AMajor();
+void BMajor();
+void BMajorPlus();
 
 void autonomous()
 {
   // AMajor();
-  AMinor();
+  // redAMinor();
+
+  BMajor();
+  // BMajorPlus();
   }
 
   void AMajor(){
@@ -51,48 +56,71 @@ void autonomous()
     }
   }
 
-  void AMinor(){
+  void redAMinor(){
     drive(-6_in);
     pros::delay(370);
     backIn();
-    liftUp();
+    liftIntake();
     pros::delay(300);
     conveyerUp();
     turn(20_deg);
     conveyerDown();
-    pros::delay(500);
+    pros::delay(300);
     conveyerUp();
-    driveWithLeft(31_in);
+    driveWithLeft(32_in);
     pros::delay(400);
-    driveLeft->moveVelocity(96);
-    driveRight->moveVelocity(100);
-    pros::delay(1500);
-    drive(-5_in);
-    driveLeft->moveVelocity(96);
-    driveRight->moveVelocity(100);
-    pros::delay(1100);
-    motor_conveyer->moveVelocity(0);
-    stop();
-    motor_frontLift->moveVelocity(-20);
-    pros::delay(400);
-    motor_frontLift->moveVelocity(0);
     driveLeft->moveVelocity(48);
-    driveRight->moveVelocity(50);
-    pros::delay(800);
+    driveRight->moveVelocity(51);
+    pros::delay(3100);
+    liftDown();
+    pros::delay(700);
+    motor_frontLift->moveVelocity(0);
+    motor_conveyer->moveVelocity(0);
     frontIn();
     pros::delay(500);
     stop();
     pros::delay(200);
-    driveLeft->moveVelocity(-192);
+    driveLeft->moveVelocity(-170);
     driveRight->moveVelocity(-200);
-    pros::delay(900);
+    pros::delay(1000);
     stop();
     pros::delay(300);
     frontOut();
     pros::delay(300);
-    liftUp();
+    liftIntake();
     conveyerUp();
-    drive(-7_in);
+    drive(-9_in);
     backOut();
-    drive(3_in);
+    drive(5_in);
+  }
+
+  void BMajor(){
+    driveLeft->moveVelocity(200);
+    driveRight->moveVelocity(200);
+    pros::delay(670);
+
+    stop();
+    pros::delay(800);
+    frontIn();
+    pros::delay(100);
+    drive(-25_in, 1);
+    pros::delay(100);
+    turn(-72_deg);
+
+    driveLeft->moveVelocity(-40);
+    driveRight->moveVelocity(-40);
+    pros::delay(900);
+    stop();
+    pros::delay(400);
+    backIn();
+    pros::delay(100);
+
+    liftIntake();
+    conveyerUp();
+
+    turn(72_deg);
+
+    pros::delay(3000);
+    frontOut();
+    backOut();
   }

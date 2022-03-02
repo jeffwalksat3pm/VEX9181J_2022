@@ -13,6 +13,7 @@ namespace global{
   extern void conveyerUp();
   extern void conveyerDown();
   extern void liftUp();
+  extern void liftIntake();
   extern void liftDown();
   extern void drive(okapi::QLength targetDistance);
   extern void drive(okapi::QLength targetDistance, unsigned int withMogo);

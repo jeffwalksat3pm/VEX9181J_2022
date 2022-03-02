@@ -32,6 +32,12 @@ namespace global{
   {
     frontLiftController->setTarget(630);
   }
+
+  void liftIntake()
+  {
+    frontLiftController->setTarget(200);
+  }
+
   void liftDown()
   {
     frontLiftController->setTarget(0);
