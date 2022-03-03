@@ -6,6 +6,7 @@ void redAMinor();
 void AMajor();
 void BMajor();
 void BMajorPlus();
+void BMajorCore();
 
 void autonomous()
 {
@@ -17,7 +18,8 @@ void autonomous()
   }
 
   void AMajor(){
-    driveLeft->moveVelocity(192);
+    motor_frontLift->moveVelocity(-20);
+    driveLeft->moveVelocity(195);
     driveRight->moveVelocity(200);
     pros::delay(750);
 
@@ -94,33 +96,52 @@ void autonomous()
     drive(5_in);
   }
 
-  void BMajor(){
+  void BMajorCore(){
+    motor_frontLift->moveVelocity(-20);
     driveLeft->moveVelocity(200);
     driveRight->moveVelocity(200);
-    pros::delay(670);
-
+    pros::delay(690);
     stop();
     pros::delay(800);
     frontIn();
     pros::delay(100);
-    drive(-25_in, 1);
+    drive(-19_in, 3);
     pros::delay(100);
-    turn(-72_deg);
-
+    turnTo(293_deg,0);
+    pros::delay(200);
+    frontOut();
+    pros::delay(100);
     driveLeft->moveVelocity(-40);
     driveRight->moveVelocity(-40);
-    pros::delay(900);
+    pros::delay(1400);
     stop();
-    pros::delay(400);
+    pros::delay(500);
     backIn();
-    pros::delay(100);
-
+    pros::delay(200);
     liftIntake();
     conveyerUp();
+    pros::delay(200);
+    drive(7_in,1);
+    turnTo(5_deg, 1);
+    stop();
+    // drive(25_in,1);
+    driveLeft->moveVelocity(40);
+    driveRight->moveVelocity(40);
+    pros::delay(2500);
+  }
 
-    turn(72_deg);
 
-    pros::delay(3000);
-    frontOut();
+
+  void BMajor(){
+    BMajorCore();
+    drive(-15_in,1);
     backOut();
+    drive(5_in);
+  }
+
+  void BMajorPlus(){
+    BMajorCore();
+    turnTo(90_deg,1);
+    drive(8_in,1);
+    turnTo(230_deg,0);
   }

@@ -14,7 +14,7 @@ namespace global{
   std::shared_ptr<okapi::AsyncPositionController<double, double>> conveyerController;
 //0.000480, -0.0000000, -0.000135
   okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.000680, -0.000040, -0.000130}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020} };
-  okapi::IterativePosPIDController::Gains turn_gain = {0.007500, 0.001500, 0.000015};
+  okapi::IterativePosPIDController::Gains turn_gain = {0.005625, 0.00112500, 0.00001125};
   okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
 
   void build_chassis()
@@ -53,7 +53,7 @@ namespace global{
     straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.000001, 0.0, 0.0000001));
     turnController =
         //std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.010000, 0.002080, 0.000020));
-        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.007500, 0.001500, 0.000015));
+        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.005625, 0.00112500, 0.00001125));
     // Set output limits for controllers
     leftDriveController->setOutputLimits(1.0, -1.0);
     rightDriveController->setOutputLimits(1.0, -1.0);
