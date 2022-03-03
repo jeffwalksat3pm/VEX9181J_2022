@@ -18,9 +18,11 @@ double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
 void opcontrol()
 {
-  //test(); // test function; dead loop
+  test(); // test function; dead loop
   while (true) {
-    pros::lcd::set_text(1, std::to_string(encoder_lift.get()));
+
+
+    pros::lcd::set_text(0, "cm:" + std::to_string(distance_top.get()/10.0));
     pros::lcd::set_text(2, std::to_string(drive_encoder_right.get()));
     pros::lcd::set_text(3, std::to_string(encoder_right.get()));
     int i = 0;
@@ -143,12 +145,13 @@ void opcontrol()
 
 void test()
 {
+  driveAndApproach(10_in, 1);
   // frontIn();
   // backIn();
-  pros::delay(300);
-  liftUp();
-  pros::delay(3000);
-  drive(60_in, 3);
+  // pros::delay(300);
+  // liftUp();
+  // pros::delay(3000);
+  // drive(60_in, 3);
   // drive(-50_in, 3);
   // drive(30_in, 3);
   // frontLiftController->waitUntilSettled();
@@ -158,6 +161,7 @@ void test()
   //   // pros::lcd::set_text(3, std::to_string(imu.get()));
   //   pros::delay(10);
   // }
+  //while(1);
 }
 double returnOnlyPostitive(double val){
   if (val<=0) {

@@ -21,6 +21,10 @@ namespace global{
   okapi::IntegratedEncoder drive_encoder_left(*motor_bottomLeft);
   okapi::IntegratedEncoder drive_encoder_right(*motor_bottomRight);
   //okapi::MotorGroup * liftRear = new okapi::MotorGroup({*motor_rearLiftLeft, *motor_rearLiftRight});
+
+  okapi::DistanceSensor distance_top = okapi::DistanceSensor(11, std::make_unique<okapi::MedianFilter<5>>());
+  okapi::DistanceSensor distance_bottom = okapi::DistanceSensor(15, std::make_unique<okapi::MedianFilter<5>>());
+
   okapi::ADIEncoder encoder_left({6, 5, 6}, false);
   okapi::ADIEncoder encoder_right({6, 1, 2}, false);
   okapi::ADIEncoder encoder_middle({6, 3, 4}, false);

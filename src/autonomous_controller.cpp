@@ -76,7 +76,6 @@ namespace global{
   void drive(QLength targetDistance)
   {
     // Reset everything
-    encoder_left.reset();
     encoder_right.reset();
     drive_encoder_left.reset();
     drive_encoder_right.reset();
@@ -152,18 +151,21 @@ namespace global{
     leftDriveController->setGains(distance_gain[0]);
     rightDriveController->setGains(distance_gain[0]);
   }
-  void driveAndApproach(QLength targetDistance)
+  void driveAndApproach(QLength targetDistance, bool top)
   {
+    okapi::DistanceSensor * distance_sensor = &(top ? distance_top : distance_bottom);
     // Reset everything
-    encoder_left.reset();
     encoder_right.reset();
+    drive_encoder_left.reset();
+    drive_encoder_right.reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
     // Calculate required amount of degrees to travel
-    double cm = targetDistance.convert(centimeter);
+    double cm = distance_sensor->get()/10.0 - double(targetDistance.convert(centimeter));
     double degrees = (cm / circumference) * 360.0;
 
+    double tune = degrees > 0 ? 1 : 0.98;
     // Set targets
     leftDriveController->setTarget(degrees);
     rightDriveController->setTarget(degrees);
@@ -182,26 +184,26 @@ namespace global{
         break;
       }
       // Get current positions
-      double leftReading = encoder_left.get();
-      double rightReading = encoder_right.get();
-
+      double distanceReading = encoder_right.controllerGet();
+      double leftReading = drive_encoder_left.controllerGet();
+      double rightReading = drive_encoder_right.controllerGet();
       double diffReading = leftReading - rightReading;
 
       // Get the powers
-      double leftPower = leftDriveController->step(leftReading);
-      double rightPower = rightDriveController->step(rightReading);
+      double leftPower = leftDriveController->step(distanceReading);
+      double rightPower = rightDriveController->step(distanceReading);
       double straightPower = straightDriveController->step(diffReading);
       // Apply powers
-      driveLeft->controllerSet(leftPower + straightPower);
-      driveRight->controllerSet(rightPower - straightPower);
+      driveLeft->controllerSet(tune * leftPower + straightPower);
+      driveRight->controllerSet(tune * rightPower - straightPower);
 
-      double leftCentimeters = (leftReading / 360.0) * circumference;
-      double rightCentimeters = (rightReading / 360.0) * circumference;
+      double leftCentimeters = (distanceReading / 360.0) * circumference;
+      double rightCentimeters = (distanceReading / 360.0) * circumference;
 
-      double leftError = degrees - leftReading;
-      double rightError = degrees - rightReading;
-
-      bool ok = abs(leftError) < 10.0 && abs(rightError) < 10.0;
+      // double leftError = degrees - leftReading;
+      // double rightError = degrees - leftReading;
+      double error = degrees - distanceReading;
+      bool ok = abs(error) < 10.0;
 
       if(ok && timeWhenOk == -1) {
         timeWhenOk = pros::millis();
@@ -220,7 +222,14 @@ namespace global{
     // Stop the drives
     stop();
   }
-
+  void driveAndApproach(QLength targetDistance, bool top, unsigned int withMogo)
+  {
+    leftDriveController->setGains(distance_gain[withMogo]);
+    rightDriveController->setGains(distance_gain[withMogo]);
+    driveAndApproach(targetDistance, top);
+    leftDriveController->setGains(distance_gain[0]);
+    rightDriveController->setGains(distance_gain[0]);
+  }
   void driveIndependent(QLength leftLength, QLength rightLength) {
     // Reset everything
     drive_encoder_left.reset();

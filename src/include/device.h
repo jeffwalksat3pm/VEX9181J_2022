@@ -33,7 +33,8 @@ namespace global{
   extern okapi::RotationSensor encoder_lift;
 // Other Triport Sensors
   extern okapi::ADIButton limit_back;
-  extern okapi::DistanceSensor distance_back;
+  extern okapi::DistanceSensor distance_top;
+  extern okapi::DistanceSensor distance_bottom;
   extern okapi::RotationSensor frontLift_sensor;
 // PROS Sensors
   extern pros::ADIDigitalOut piston_front;
