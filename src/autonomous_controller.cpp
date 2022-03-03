@@ -151,6 +151,103 @@ namespace global{
     leftDriveController->setGains(distance_gain[0]);
     rightDriveController->setGains(distance_gain[0]);
   }
+  void driveAndIntake(QLength targetDistance, unsigned int withMogo)
+  {
+    withMogo = withMogo >= 2 ? 1 : withMogo;
+    leftDriveController->setGains(distance_gain[withMogo]);
+    rightDriveController->setGains(distance_gain[withMogo]);
+    // Reset everything
+    encoder_right.reset();
+    drive_encoder_left.reset();
+    drive_encoder_right.reset();
+    leftDriveController->reset();
+    rightDriveController->reset();
+
+    // Calculate required amount of degrees to travel
+    double cm = targetDistance.convert(centimeter);
+    double degrees = (cm / circumference) * 360.0;
+
+    double tune = degrees > 0 ? 1 : 0.98;
+    // Set targets
+    leftDriveController->setTarget(degrees);
+    rightDriveController->setTarget(degrees);
+
+    printf("Target: %fcm\n", cm);
+
+    int timeStart = pros::millis();
+
+    int timeWhenOk = -1;
+
+    int timeArrive = -1;
+    bool isIn = 0;
+    while (!leftDriveController->isSettled() && !rightDriveController->isSettled())
+    {
+      // Get current gyro value
+      if (pros::millis() - timeStart > 3000)
+      {
+        pros::lcd::print(3, "stopped");
+        break;
+      }
+      if(timeArrive == -1 && !isIn)
+      {
+        if(distance_bottom.controllerGet() < 30)
+        {
+          timeArrive = pros::millis();
+        }
+      }
+      else
+      {
+        if(pros::millis() - timeArrive > 500)
+        {
+          piston_front.set_value(true);
+          frontLiftController->setTarget(80);
+          timeArrive = -1;
+          isIn = 1;
+          leftDriveController->setGains(distance_gain[3]);
+          rightDriveController->setGains(distance_gain[3]);
+        }
+      }
+      // Get current positions
+      double distanceReading = encoder_right.controllerGet();
+      double leftReading = drive_encoder_left.controllerGet();
+      double rightReading = drive_encoder_right.controllerGet();
+      double diffReading = leftReading - rightReading;
+
+      // Get the powers
+      double leftPower = leftDriveController->step(distanceReading);
+      double rightPower = rightDriveController->step(distanceReading);
+      double straightPower = straightDriveController->step(diffReading);
+      // Apply powers
+      driveLeft->controllerSet(tune * leftPower + straightPower);
+      driveRight->controllerSet(tune * rightPower - straightPower);
+
+      double leftCentimeters = (distanceReading / 360.0) * circumference;
+      double rightCentimeters = (distanceReading / 360.0) * circumference;
+
+      // double leftError = degrees - leftReading;
+      // double rightError = degrees - leftReading;
+      double error = degrees - distanceReading;
+      bool ok = abs(error) < 10.0;
+
+      if(ok && timeWhenOk == -1) {
+        timeWhenOk = pros::millis();
+      }
+      else if(!ok) {
+        timeWhenOk = -1;
+      }
+      else if(ok && pros::millis() - timeWhenOk > 100) {
+        break;
+      }
+
+      // Log data
+      printf("%fcm -> %fcm | %fcm -> %fcm\n", leftCentimeters, cm, rightCentimeters, cm);
+      pros::delay(1);
+    }
+    // Stop the drives
+    stop();
+    leftDriveController->setGains(distance_gain[0]);
+    rightDriveController->setGains(distance_gain[0]);
+  }
   void driveAndApproach(QLength targetDistance, bool top)
   {
     okapi::DistanceSensor * distance_sensor = &(top ? distance_top : distance_bottom);
@@ -356,7 +453,6 @@ namespace global{
     // Stop the drives
     stop();
   }
-
   void driveWithRight(QLength length) {
     // Reset everything
     drive_encoder_right.reset();
@@ -475,6 +571,6 @@ namespace global{
         target = degs-startValue;
       }
       turn((dir ? target : (target-360) ) * degree);
-
   }
+
 }

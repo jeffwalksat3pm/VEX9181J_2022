@@ -17,8 +17,9 @@ namespace global{
   extern void liftDown();
   extern void drive(okapi::QLength targetDistance);
   extern void drive(okapi::QLength targetDistance, unsigned int withMogo);
+  extern void driveAndIntake(okapi::QLength targetDistance, unsigned int withMogo);
   extern void driveAndApproach(okapi::QLength targetDistance, bool top);
-  extern void driveAndApproach(QLength targetDistance, bool top, unsigned int withMogo);
+  extern void driveAndApproach(okapi::QLength targetDistance, bool top, unsigned int withMogo);
   extern void driveIndependent(okapi::QLength leftLength, okapi::QLength rightLength);
   extern void turnTo(okapi::QAngle targetDegrees, bool dir);
   extern void turn(okapi::QAngle targetDegrees);

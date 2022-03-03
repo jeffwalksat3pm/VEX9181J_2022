@@ -18,7 +18,7 @@ double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
 void opcontrol()
 {
-  test(); // test function; dead loop
+  //test(); // test function; dead loop
   while (true) {
 
 
@@ -26,8 +26,8 @@ void opcontrol()
     pros::lcd::set_text(2, std::to_string(drive_encoder_right.get()));
     pros::lcd::set_text(3, std::to_string(encoder_right.get()));
     int i = 0;
-    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.9,
-                              masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.65) ;
+    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.7,
+                              masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.6) ;
 
     if (i %20 == 0) {
       masterController->setText(1, 1, std::to_string(encoder_lift.get()));
@@ -76,7 +76,7 @@ void opcontrol()
       }
       else
       {
-        if(encoder_lift.get()>15)
+        if(encoder_lift.get()>15 && (distance_top.controllerGet()>300 || encoder_lift.get()<70) )
         {
           motor_conveyer->moveVelocity(0.65 * 600);
         }
@@ -105,27 +105,28 @@ void opcontrol()
       if(isFetch) //toggle: double press button
       {
         piston_rearFetch.set_value(false);
-        pros::delay(100);
+        pros::delay(200);
         piston_rearClinch.set_value(false);
         isFetch = false;
+        isClinch = false;
       } else {
         piston_rearClinch.set_value(true);
-        pros::delay(100);
+        pros::delay(200);
         piston_rearFetch.set_value(true);
         isFetch = true;
+        isClinch = true;
       }
     }
-
-    // if(rearClinch.changedToPressed()){
-    //   if(isClinch) //toggle: double press button
-    //   {
-    //     piston_rearClinch.set_value(false);
-    //     isClinch = false;
-    //   } else {
-    //     piston_rearClinch.set_value(true);
-    //     isClinch = true;
-    //   }
-    // }
+    if(rearClinch.changedToPressed()){
+      if(isClinch) //toggle: double press button
+      {
+        piston_rearClinch.set_value(false);
+        isClinch = false;
+      } else {
+        piston_rearClinch.set_value(true);
+        isClinch = true;
+      }
+    }
 
 
     //Absolute position reset for backlift B
@@ -145,7 +146,7 @@ void opcontrol()
 
 void test()
 {
-  driveAndApproach(10_in, 1);
+  driveAndIntake(50_in, 0);
   // frontIn();
   // backIn();
   // pros::delay(300);
