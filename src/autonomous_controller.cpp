@@ -190,15 +190,16 @@ namespace global{
       }
       if(timeArrive == -1 && !isIn)
       {
-        if(distance_bottom.controllerGet() < 30)
+        if(distance_bottom.controllerGet() < 220)
         {
           timeArrive = pros::millis();
         }
       }
       else
       {
-        if(pros::millis() - timeArrive > 500)
+        if(pros::millis() - timeArrive > 1200)
         {
+          masterController->setText(1, 1, std::to_string(distance_bottom.controllerGet()));
           piston_front.set_value(true);
           frontLiftController->setTarget(80);
           timeArrive = -1;
