@@ -8,4 +8,6 @@ namespace global{
   okapi::ChassisScales scale_tracking = {{2.75_in, 8.25_in}, quadEncoderTPR};
   okapi::AbstractMotor::gearset gearset_lift = okapi::AbstractMotor::gearset::red;
   okapi::AbstractMotor::gearset gearset_conveyer = okapi::AbstractMotor::gearset::blue;
+  const double circumference = 3.1415 * 6.985;
+  const double circumference_intergrated = 3.1415 * 8.255;
 }

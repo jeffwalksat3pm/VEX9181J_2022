@@ -7,4 +7,5 @@
 #include "controller.h"
 #include "autonomous_controller.h"
 #include "master.h"
+#include "async.h"
 #endif

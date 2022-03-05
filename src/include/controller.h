@@ -13,7 +13,7 @@ namespace global{
   extern std::shared_ptr<okapi::AsyncPositionController<double, double>> rearLiftController;
   extern std::shared_ptr<okapi::AsyncPositionController<double, double>> frontLiftController;
   extern std::shared_ptr<okapi::AsyncPositionController<double, double>> conveyerController;
-
+  extern std::shared_ptr<okapi::IterativePosPIDController> balanceController;
 
   extern okapi::IterativePosPIDController::Gains distance_gain[];
   extern okapi::IterativePosPIDController::Gains turn_gain;

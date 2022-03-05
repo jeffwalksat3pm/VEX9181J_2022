@@ -23,6 +23,7 @@ namespace global{
   extern void driveIndependent(okapi::QLength leftLength, okapi::QLength rightLength);
   extern void turnTo(okapi::QAngle targetDegrees, bool dir);
   extern void turn(okapi::QAngle targetDegrees);
+  extern void balance();
   extern void driveWithRight(okapi::QLength length);
   extern void driveWithLeft(okapi::QLength length);
 }

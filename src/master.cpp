@@ -10,6 +10,7 @@ namespace global{
   okapi::ControllerButton resetByHand(okapi::ControllerDigital::B);
   okapi::ControllerButton liftPlatform(okapi::ControllerDigital::X);
   okapi::ControllerButton modeChange(okapi::ControllerDigital::Y);
+  okapi::ControllerButton balancePlatform(okapi::ControllerDigital::down);
   void configure_master() {
 
     //masterController = new okapi::Controller();

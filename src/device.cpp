@@ -13,8 +13,8 @@ namespace global{
 
   // okapi::Motor * motor_rearLiftLeft = new okapi::Motor(2, 0, gearset_lift, DEG);
   // okapi::Motor * motor_rearLiftRight = new okapi::Motor(4, 1, gearset_lift, DEG);
-  okapi::Motor * motor_frontLift = new okapi::Motor(20, 1, gearset_lift, DEG);
-  okapi::Motor * motor_conveyer = new okapi::Motor(19, 1, gearset_conveyer, DEG);
+  okapi::Motor * motor_frontLift = new okapi::Motor(19, 1, gearset_lift, DEG);
+  okapi::Motor * motor_conveyer = new okapi::Motor(17, 1, gearset_conveyer, DEG);
   okapi::MotorGroup * driveRight = new okapi::MotorGroup({*motor_topRight, *motor_midRight, *motor_bottomRight});
   okapi::MotorGroup * driveLeft = new okapi::MotorGroup({*motor_topLeft, *motor_midLeft, *motor_bottomLeft});
 
@@ -22,8 +22,8 @@ namespace global{
   okapi::IntegratedEncoder drive_encoder_right(*motor_bottomRight);
   //okapi::MotorGroup * liftRear = new okapi::MotorGroup({*motor_rearLiftLeft, *motor_rearLiftRight});
 
-  okapi::DistanceSensor distance_top = okapi::DistanceSensor(11, std::make_unique<okapi::MedianFilter<5>>());
-  okapi::DistanceSensor distance_bottom = okapi::DistanceSensor(15, std::make_unique<okapi::MedianFilter<5>>());
+  pros::Distance distance_top = pros::Distance(11);
+  pros::Distance distance_bottom = pros::Distance(15);
 
   okapi::ADIEncoder encoder_left({6, 5, 6}, false);
   okapi::ADIEncoder encoder_right({6, 1, 2}, false);
@@ -35,7 +35,7 @@ namespace global{
   pros::IMU imu(9);
   pros::ADIDigitalOut piston_front('A');
   pros::ADIDigitalOut piston_rearFetch('B');
-  pros::ADIDigitalOut piston_rearClinch({6, 'H'}, false);
+  pros::ADIDigitalOut piston_rearClinch({6, 'G'}, false);
 
   void configure_device()
   {
@@ -47,5 +47,7 @@ namespace global{
     // motor_rearLiftLeft->setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
     // motor_rearLiftRight->setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
     motor_frontLift->setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+    distance_top.get();
+    distance_bottom.get();
   }
 }

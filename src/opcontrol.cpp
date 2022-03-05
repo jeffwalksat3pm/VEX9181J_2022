@@ -18,7 +18,7 @@ double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
 void opcontrol()
 {
-  //test(); // test function; dead loop
+  test(); // test function; dead loop
   while (true) {
 
 
@@ -26,7 +26,7 @@ void opcontrol()
     pros::lcd::set_text(2, std::to_string(drive_encoder_right.get()));
     pros::lcd::set_text(3, std::to_string(encoder_right.get()));
     int i = 0;
-    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.7,
+    chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.90,
                               masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.6) ;
 
     if (i %20 == 0) {
@@ -76,7 +76,8 @@ void opcontrol()
       }
       else
       {
-        if(encoder_lift.get()>15 && (distance_top.controllerGet()>300 || encoder_lift.get()<70) )
+        //old @PARAM (encoder_lift.get()>15 && (distance_top.controllerGet()>300 || encoder_lift.get()<70))
+        if(encoder_lift.get()>15)
         {
           motor_conveyer->moveVelocity(0.65 * 600);
         }
@@ -117,16 +118,23 @@ void opcontrol()
         isClinch = true;
       }
     }
-    if(rearClinch.changedToPressed()){
-      if(isClinch) //toggle: double press button
-      {
-        piston_rearClinch.set_value(false);
-        isClinch = false;
-      } else {
-        piston_rearClinch.set_value(true);
-        isClinch = true;
-      }
+    if(balancePlatform.changedToPressed())
+    {
+        //pros::lcd::set_text(1, "error" + std::to_string(imu.get_pitch()));
+        pros::lcd::set_text(1, std::to_string(distance_top.get()));
+      //balance();
     }
+
+    // if(rearClinch.changedToPressed()){
+    //   if(isClinch) //toggle: double press button
+    //   {
+    //     piston_rearClinch.set_value(false);
+    //     isClinch = false;
+    //   } else {
+    //     piston_rearClinch.set_value(true);
+    //     isClinch = true;
+    //   }
+    // }
 
 
     //Absolute position reset for backlift B
@@ -146,9 +154,15 @@ void opcontrol()
 
 void test()
 {
-  driveAndIntake(50_in, 0);
   // frontIn();
-  // backIn();
+  // drive(-10_in);
+  // liftUp();
+  // pros::delay(2000);
+  // driveAndApproach(3_in, 1, 3);
+  //balance(40_in, 4);
+  //driveAndIntake(50_in, 0);
+  // frontIn();
+  // backIn();dd
   // pros::delay(300);
   // liftUp();
   // pros::delay(3000);

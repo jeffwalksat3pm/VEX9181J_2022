@@ -11,5 +11,7 @@ namespace global{
   extern okapi::AbstractMotor::gearset gearset_chassis;
   extern okapi::AbstractMotor::gearset gearset_lift;
   extern okapi::AbstractMotor::gearset gearset_conveyer;
+  extern const double circumference;
+  extern const double circumference_intergrated;
 }
 #endif

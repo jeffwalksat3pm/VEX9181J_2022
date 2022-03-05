@@ -3,7 +3,6 @@
 using namespace okapi;
 
 namespace global{
-
   void frontIn()
   {
     piston_front.set_value(true);
@@ -71,8 +70,7 @@ namespace global{
     driveRight->controllerSet(0.0);
   }
 
-  double circumference = 3.1415 * 6.985;
-  double circumference_intergrated = 3.1415 * 8.255;
+
   void drive(QLength targetDistance)
   {
     // Reset everything
@@ -190,16 +188,16 @@ namespace global{
       }
       if(timeArrive == -1 && !isIn)
       {
-        if(distance_bottom.controllerGet() < 220)
+        if(distance_bottom.get() < 30)
         {
           timeArrive = pros::millis();
         }
       }
       else
       {
-        if(pros::millis() - timeArrive > 1200)
+        if(pros::millis() - timeArrive > 500)
         {
-          masterController->setText(1, 1, std::to_string(distance_bottom.controllerGet()));
+          masterController->setText(1, 1, std::to_string(distance_bottom.get()));
           piston_front.set_value(true);
           frontLiftController->setTarget(80);
           timeArrive = -1;
@@ -251,7 +249,7 @@ namespace global{
   }
   void driveAndApproach(QLength targetDistance, bool top)
   {
-    okapi::DistanceSensor * distance_sensor = &(top ? distance_top : distance_bottom);
+    pros::Distance * distance_sensor = &(top ? distance_top : distance_bottom);
     // Reset everything
     encoder_right.reset();
     drive_encoder_left.reset();
@@ -261,6 +259,7 @@ namespace global{
 
     // Calculate required amount of degrees to travel
     double cm = distance_sensor->get()/10.0 - double(targetDistance.convert(centimeter));
+    pros::lcd::set_text(3, std::to_string(distance_sensor->get()/10.0 - double(targetDistance.convert(centimeter))));
     double degrees = (cm / circumference) * 360.0;
 
     double tune = degrees > 0 ? 1 : 0.98;
@@ -551,6 +550,53 @@ namespace global{
 
       // Log data
       printf("%fdeg -> %fdeg\n", currentValue, targetDegrees);
+
+      pros::delay(10); // Run the control loop at 10ms intervals
+    }
+
+    // Stop the drives
+    stop();
+  }
+  void balance()
+  {
+    // Reset everything
+    //gyro.reset();
+    double startValue = imu.get_pitch();
+    turnController->reset();
+
+    turnController->setTarget(std::abs(startValue)/startValue * 10);
+
+
+    int timeStart = pros::millis();
+    pros::lcd::print(3, "running");
+
+    int timeWhenOk = -1;
+    while (true)
+    {
+      // Get current gyro value
+      double currentValue = imu.get_pitch();
+
+      double error = 0-currentValue;
+      pros::lcd::set_text(1, "error" + std::to_string(error));
+      bool ok = abs(error) < 7;
+      if(ok && timeWhenOk == -1) {
+        timeWhenOk = pros::millis();
+      }
+      else if(!ok) {
+        timeWhenOk = -1;
+      }
+      else if(ok && pros::millis() - timeWhenOk > 1000 && abs(error) < 3) {
+        break;
+      }
+
+      // Get the power for motors
+      double power = turnController->step(currentValue);
+
+      // Set the power
+      driveLeft->controllerSet(-power);
+      driveRight->controllerSet(-power);
+
+      // Log data
 
       pros::delay(10); // Run the control loop at 10ms intervals
     }

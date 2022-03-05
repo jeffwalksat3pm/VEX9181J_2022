@@ -15,6 +15,7 @@ namespace global{
   extern okapi::ControllerButton resetByHand;
   extern okapi::ControllerButton liftPlatform;
   extern okapi::ControllerButton modeChange;
+  extern okapi::ControllerButton balancePlatform;
   extern void configure_master();
 }
 
