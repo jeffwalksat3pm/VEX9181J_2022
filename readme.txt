@@ -1,6 +1,6 @@
 VERSION:0.2.2
 Code for provincials tournament
-Last Edit: Mar, 2022 at 01:00am
+Last Edit: Mar 6, 2022 at 01:00am
 Edit by: Ryu Sado / Jeff Sun
 
 
