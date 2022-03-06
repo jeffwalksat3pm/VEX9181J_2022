@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "Fresh_Ver0.1.2_Alpha",
+        "project_name": "Fresh_Ver0.2.2_Beta",
         "target": "v5",
         "templates": {
             "kernel": {

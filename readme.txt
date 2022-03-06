@@ -1,17 +1,22 @@
-VERSION:0.1.2
-Live Code at December WestVan Tournament;
-Last Edit: Dec 11, 2021 at 18:30 (6:30pm)
-Edit by: Ryu Sado
+VERSION:0.2.2
+Code for provincials tournament
+Last Edit: Mar, 2022 at 01:00am
+Edit by: Ryu Sado / Jeff Sun
 
 
 Ver.0.X.X - "Fresh":
 1st gen new frameworks and basic functional operations; Alpha / Beta development;
 
-0.1.2: "Fresh" Alpha Ver 2:
+0.2.2: "Fresh" Beta Ver 2:
 //Features and Fixes//
- - Fixed initialization issue on comp mode
- - Inverted initialization for backlift
- - Added functionality to manually set backlift angle limit
- - Other minor error/bug fixes
+ - Added functions for autonomous
+ - Added functions implementing distance sensor
+ - Added asynchronous functions
+ - Added 3 match autonomous code and skills autonomous code
+ - Modifications on PID control values
+ - Modifications on driver control configs
 //Known Issues, Tasks//
- - Autonomous functions not tested yet; May contain errors/bugs
+ - Skills autonomous incomplete
+ - Some issues on turns using imu/inertial sensor
+ - Robot shifts on acceleration
+ - Needs more Modifications on autonomous hard values
