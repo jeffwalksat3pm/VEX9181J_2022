@@ -14,10 +14,10 @@ void autonomous()
   // AMajor();
   // redAMinor();
 
-  BMajor();
+  // BMajor();
   // BMajorPlus();
 
-  // skills();
+  skills();
 
   while(1){
     pros::delay(100);
@@ -26,25 +26,24 @@ void autonomous()
   }
 
   void skills(){
-    drive(-6_in);
-    pros::delay(200);
+    asyncDrive(-8_in,0);
+    pros::delay(400);
     backIn();//red1
-    pros::delay(300);
+    waitUntilDriveComplete();
     driveWithLeft(15_in);
     pros::delay(300);
-    turnTo(95_deg,1);
+    turnTo(100_deg,1);
     // driveAndIntake(50_in, 1);
-    driveLeft->moveVelocity(200);
-    driveRight->moveVelocity(200);
-    pros::delay(750);
-    stop();
-    pros::delay(700);
-    frontIn();//yellow1
-    pros::delay(200);
+    motor_frontLift->moveVelocity(-20);
+    asyncDrive(44_in, 0);
+    waitUntilReach(4.3_cm, 0);
+    frontIn();
+    pros::delay(300);
     liftUp();
     turnTo(130_deg,1);//turn to platform
     conveyerUp();
-    drive(54_in,3);  //approach platform
+
+    driveAndApproach(7_in,1);  //approach platform
     turnTo(90_deg,0); //align mogo
     pros::delay(200);
     frontOut();//score yellow1
@@ -54,16 +53,14 @@ void autonomous()
     drive(5_in,0);
     turnTo(270_deg, 0);
     pros::delay(200);
-    driveLeft->moveVelocity(60);
-    driveRight->moveVelocity(60);
-    pros::delay(700);
-    stop();
-    pros::delay(400);
+    asyncDrive(15_in, 0);
+    waitUntilReach(3_cm, 0);
     frontIn();//red1 again
+
     pros::delay(200);
     liftUp();
     turnTo(90_deg,1);
-    drive(15_in,3);
+    driveAndApproach(3_in,1);
     frontOut();//score red1
     /* part 2
     drive(-4_in,0);
