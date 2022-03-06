@@ -27,29 +27,31 @@ void autonomous()
 
   void skills(){
     asyncDrive(-6_in,0);
-    pros::delay(400);
+    pros::delay(500);
     backIn();//red1
     waitUntilDriveComplete();
     driveWithLeft(15_in);
     pros::delay(300);
     turnTo(96_deg,1);
+    pros::delay(200);
     // driveAndIntake(50_in, 1);
     motor_frontLift->moveVelocity(-20);
     asyncDrive(48_in, 0);
     waitUntilReach(3.5_cm, 0);
     frontIn();
     pros::delay(200);
+    waitUntilDriveComplete();
     liftUp();
     conveyerUp();
-    drive(32.5_in,3);
+    drive(33.5_in,3);
     conveyerUp();
     turnTo(183_deg,1);
     driveLeft->moveVelocity(80);
     driveRight->moveVelocity(80);
-    pros::delay(2400);
+    pros::delay(2450);
     stop();
     pros::delay(500);
-    asyncDrive(-37_in,3);
+    asyncDrive(-40_in,3);
     conveyerDown();
     pros::delay(300);
     conveyerUp();
@@ -61,16 +63,16 @@ void autonomous()
     // pros::delay(20000);
     motor_conveyer->moveVelocity(0);
 
-    drive(5_in,3);
+    drive(6.5_in,3);
     turnTo(85_deg,0);
     pros::delay(200);
-    motor_frontLift->moveVelocity(10);
+    motor_frontLift->moveVelocity(20);
     driveLeft->moveVelocity(140);
     driveRight->moveVelocity(140);
-    pros::delay(600);
+    pros::delay(700);
     driveLeft->moveVelocity(40);
     driveRight->moveVelocity(40);
-    pros::delay(700);
+    pros::delay(800);
     stop();
     pros::delay(300);
     frontOut();//score yellow1
@@ -90,12 +92,12 @@ void autonomous()
     frontIn();//red1 again
     pros::delay(200);           ////////////////////////////
     // liftUp();
-    // waitUntilDriveComplete();
-    drive(-25_in,1);
+    waitUntilDriveComplete();
+    drive(-23_in, 0);
     liftUp();
     turnTo(92_deg,1);
-    pros::delay(200);
-    motor_frontLift->moveVelocity(10);
+    pros::delay(400);
+    motor_frontLift->moveVelocity(20);
     driveLeft->moveVelocity(55);
     driveRight->moveVelocity(55);
     pros::delay(2000);
@@ -104,7 +106,7 @@ void autonomous()
     pros::delay(200);
     motor_frontLift->moveVelocity(20);
     pros::delay(300);
-    asyncDrive(-18_in,0);
+    asyncDrive(-20_in,0);
     pros::delay(200);
     liftDown();
     waitUntilDriveComplete();
@@ -118,7 +120,6 @@ void autonomous()
     // pros::delay(1100);
     // stop();
     backIn();
-    waitUntilDriveComplete();
     pros::delay(200);
     drive(55_in, 2);
     turnTo(270_deg,1);
@@ -144,56 +145,69 @@ void autonomous()
 
 
     drive(38_in,2);
-    drive(-15_in,1); //ass
+    drive(-19_in,1); //ass
+    liftIntake();
     pros::delay(400);
     turnTo(179_deg,0);
     pros::delay(500);
     conveyerUp();
     driveLeft->moveVelocity(40);
     driveRight->moveVelocity(40);
-    pros::delay(2600);
-    liftDown();
-    stop();
-    pros::delay(600);
-    frontIn();//yellow2
-    pros::delay(300);
-    turnTo(90_deg, 0);
-    drive(-42_in,2);
-    backOut();
-    drive(20_in,1);
-    turnTo(30_deg, 0);
-    drive(-26_in,1);
-    backIn();//red2
-    pros::delay(300);
-    drive(60_in,2);//go to the center of the field
-    liftUp(); // lift yellow2 mogo
-    turnTo(90_deg, 1);//align to the platform
-    pros::delay(300);
-    backOut(); //place red2
+    pros::delay(2300);
+    asyncDrive(-5_in, 1);
     pros::delay(200);
+    liftDown();
 
-    motor_frontLift->moveVelocity(10);
-    driveLeft->moveVelocity(140);
-    driveRight->moveVelocity(140);
-    pros::delay(1200);
+    waitUntilDriveComplete();
+    pros::delay(500);
     driveLeft->moveVelocity(40);
     driveRight->moveVelocity(40);
-    pros::delay(700);
+    conveyerDown();
+    pros::delay(2000);
+    frontIn();
+    //yellow2
     stop();
-    pros::delay(300);
-    frontOut();//score yellow2
-    pros::delay(200);
-    motor_frontLift->moveVelocity(20);
-    pros::delay(300);
-    asyncDrive(-20_in,0);
-    pros::delay(200);
-    liftDown();
-    waitUntilDriveComplete();
-
-    // asyncDrive(27_in, 0);
-    // waitUntilReach(3_cm, 0);
-    // frontIn();//get yellow2
+    pros::delay(500);
+    // drive(-19_in, 2);
+    // turn(-90_deg);
+    // drive(35_in, 2);
+    // turn(60_deg);
+    // frontOut();
+    // drive(3_in, 2);
+    // drive(-3_in, 1);
+    // pros::delay(300);
+    // turn(-60_deg);
+    // pros::delay(300);
+    // driveLeft->moveVelocity(50);
+    // driveRight->moveVelocity(50);
+    // pros::delay(1000);
+    // frontIn();
+    // stop();
+    // pros::delay(500);
+    // drive(-50_in, 2);
+    // asyncTurn(180_deg);
+    // liftUp();
     // waitUntilDriveComplete();
+    // drive(80_in, 3);
+    turn(90_deg);
+    liftUp();
+    conveyerUp();
+    pros::delay(1000);
+    drive(60_in, 3);
+    pros::delay(500);
+    conveyerDown();
+    turnTo(0_deg, 1);
+    pros::delay(500);
+    liftDown();
+    driveLeft->moveVelocity(20);
+    driveRight->moveVelocity(20);
+    pros::delay(400);
+    stop();
+    pros::delay(1500);
+    drive(29_in, 2);
+    pros::delay(300);
+    frontOut();
+    backOut();
   }
 
 

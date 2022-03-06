@@ -16,7 +16,8 @@ namespace global{
   void backIn()
   {
     piston_rearClinch.set_value(true);
-    pros::delay(300);
+    //pros::delay(300
+    pros::delay(500);
     piston_rearFetch.set_value(true);
     pros::delay(100);
   }
@@ -29,7 +30,7 @@ namespace global{
   }
   void liftUp()
   {
-    frontLiftController->setTarget(630);
+    frontLiftController->setTarget(650);
   }
 
   void liftIntake()

@@ -25,9 +25,9 @@ namespace global{
   pros::Distance distance_top = pros::Distance(11);
   pros::Distance distance_bottom = pros::Distance(15);
 
-  okapi::ADIEncoder encoder_left({6, 5, 6}, false);
-  okapi::ADIEncoder encoder_right({6, 1, 2}, false);
-  okapi::ADIEncoder encoder_middle({6, 3, 4}, false);
+  //okapi::ADIEncoder encoder_left('', '', false);
+  okapi::ADIEncoder encoder_right('E','F', false);
+  // okapi::ADIEncoder encoder_middle({6, 3, 4}, false);
   okapi::ADIButton limit_back('Z');
   //okapi::DistanceSensor distance_back = okapi::DistanceSensor(8);
   okapi::RotationSensor encoder_lift = okapi::RotationSensor(18);
@@ -35,7 +35,7 @@ namespace global{
   pros::IMU imu(9);
   pros::ADIDigitalOut piston_front('A');
   pros::ADIDigitalOut piston_rearFetch('B');
-  pros::ADIDigitalOut piston_rearClinch({6, 'G'}, false);
+  pros::ADIDigitalOut piston_rearClinch('H', false);
 
   void configure_device()
   {

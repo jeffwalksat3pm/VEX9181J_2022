@@ -18,7 +18,7 @@ double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
 void opcontrol()
 {
-  test(); // test function; dead loop
+  //test(); // test function; dead loop
   while (true) {
 
 
@@ -121,7 +121,8 @@ void opcontrol()
     if(balancePlatform.changedToPressed())
     {
         //pros::lcd::set_text(1, "error" + std::to_string(imu.get_pitch()));
-        pros::lcd::set_text(1, std::to_string(distance_top.get()));
+      //  pros::lcd::set_text(1, std::to_string(distance_top.get()));
+      drive(30_in, 2);
       //balance();
     }
 
