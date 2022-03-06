@@ -49,5 +49,6 @@ namespace global{
     motor_frontLift->setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
     distance_top.get();
     distance_bottom.get();
+    setEncoderAsync();
   }
 }

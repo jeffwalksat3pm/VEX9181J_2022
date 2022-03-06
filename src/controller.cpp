@@ -29,7 +29,7 @@ namespace global{
     .withGains(distance_gain[0], turn_gain, angle_gain)
     .withOdometry(scale_tracking, okapi::StateMode::CARTESIAN)
     //.withSensors(encoder_left, encoder_right, encoder_middle)
-    .withSensors( okapi::ADIEncoder({6, 5, 6}, false), okapi::ADIEncoder({6, 1,2 }, false))
+    //.withSensors( okapi::ADIEncoder({6, 5, 6}, false), okapi::ADIEncoder({6, 1,2 }, false))
     .withMaxVoltage(12000)
     .withMaxVelocity(200)
     .withDerivativeFilters(

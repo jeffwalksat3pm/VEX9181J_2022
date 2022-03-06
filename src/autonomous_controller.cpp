@@ -74,12 +74,13 @@ namespace global{
   void drive(QLength targetDistance)
   {
     // Reset everything
-    encoder_right.reset();
+    //encoder_right.reset();
     drive_encoder_left.reset();
     drive_encoder_right.reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
+    double startReading = getEncoderReading();
     // Calculate required amount of degrees to travel
     double cm = targetDistance.convert(centimeter);
     double degrees = (cm / circumference) * 360.0;
@@ -103,7 +104,7 @@ namespace global{
         break;
       }
       // Get current positions
-      double distanceReading = encoder_right.controllerGet();
+      double distanceReading =getEncoderReading() - startReading;
       double leftReading = drive_encoder_left.controllerGet();
       double rightReading = drive_encoder_right.controllerGet();
       double diffReading = leftReading - rightReading;
@@ -155,12 +156,13 @@ namespace global{
     leftDriveController->setGains(distance_gain[withMogo]);
     rightDriveController->setGains(distance_gain[withMogo]);
     // Reset everything
-    encoder_right.reset();
+    //encoder_right.reset();
     drive_encoder_left.reset();
     drive_encoder_right.reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
+    double startReading = getEncoderReading();
     // Calculate required amount of degrees to travel
     double cm = targetDistance.convert(centimeter);
     double degrees = (cm / circumference) * 360.0;
@@ -207,7 +209,7 @@ namespace global{
         }
       }
       // Get current positions
-      double distanceReading = encoder_right.controllerGet();
+      double distanceReading =getEncoderReading() - startReading;
       double leftReading = drive_encoder_left.controllerGet();
       double rightReading = drive_encoder_right.controllerGet();
       double diffReading = leftReading - rightReading;
@@ -251,12 +253,12 @@ namespace global{
   {
     pros::Distance * distance_sensor = &(top ? distance_top : distance_bottom);
     // Reset everything
-    encoder_right.reset();
+    //encoder_right.reset();
     drive_encoder_left.reset();
     drive_encoder_right.reset();
     leftDriveController->reset();
     rightDriveController->reset();
-
+    double startReading = getEncoderReading();
     // Calculate required amount of degrees to travel
     double cm = distance_sensor->get()/10.0 - double(targetDistance.convert(centimeter));
     pros::lcd::set_text(3, std::to_string(distance_sensor->get()/10.0 - double(targetDistance.convert(centimeter))));
@@ -281,7 +283,7 @@ namespace global{
         break;
       }
       // Get current positions
-      double distanceReading = encoder_right.controllerGet();
+      double distanceReading =getEncoderReading() - startReading;
       double leftReading = drive_encoder_left.controllerGet();
       double rightReading = drive_encoder_right.controllerGet();
       double diffReading = leftReading - rightReading;
