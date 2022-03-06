@@ -57,7 +57,7 @@ namespace global{
     balanceDriveController->setControllerSetTargetLimits(0.6, 0.6);
     //straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0001, 0.0, 0.00001));
     //straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.000065, 0.0, 0.000008));
-    straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.000001, 0.0, 0.0000001));
+    straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0001, 0.0, 0.00001));
     balanceController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.1, 0.0001, 0.001));
     balanceController->setControllerSetTargetLimits(0.9, 0.9);
     turnController =

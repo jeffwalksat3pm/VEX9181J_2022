@@ -58,10 +58,35 @@ namespace global{
       pros::delay(20);
     }
   }
-
+  void drive_vel_async(void* param)
+  {
+    while (true)
+    {
+      if(!isDriveComplete())
+      {
+        drive(target_distance, withMogos);
+        drive_complete = true;
+        leftDriveController->setControllerSetTargetLimits(0.95, 0.95);
+        rightDriveController->setControllerSetTargetLimits(0.95, 0.95);
+      }
+      pros::delay(20);
+    }
+  }
   void asyncDrive(QLength distance, unsigned int drive_options){
     target_distance = distance;
     withMogos = drive_options;
+    if(drive_task == NULL)
+    {
+      drive_task = new pros::Task(drive_async, (void*)"PROSDRIVE", TASK_PRIORITY_DEFAULT,
+                                             TASK_STACK_DEPTH_DEFAULT, "Async Drive Task");
+    }
+    drive_complete = false;
+  }
+  void asyncDrive(QLength distance, unsigned int drive_options, double vel_multiplier){
+    target_distance = distance;
+    withMogos = drive_options;
+    leftDriveController->setControllerSetTargetLimits(vel_multiplier, vel_multiplier);
+    rightDriveController->setControllerSetTargetLimits(vel_multiplier, vel_multiplier);
     if(drive_task == NULL)
     {
       drive_task = new pros::Task(drive_async, (void*)"PROSDRIVE", TASK_PRIORITY_DEFAULT,

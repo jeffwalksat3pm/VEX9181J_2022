@@ -154,6 +154,10 @@ void opcontrol()
 
 void test()
 {
+  //frontIn();
+  backIn();
+  pros::delay(1000);
+  drive(50_in, 1);
   // frontIn();
   // drive(-10_in);
   // liftUp();

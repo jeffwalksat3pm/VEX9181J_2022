@@ -12,10 +12,6 @@ namespace global{
   extern void waitUntilDriveComplete();
   extern void waitUntilTravel(QLength distance);
   extern void waitUntilReach(QLength distance, bool top);
-  extern void drive_async(void* param);
-  extern void turn_async(void* param);
-  extern void turn_to_async(void* param);
-  extern void drive_approach(void *param);
 
   extern void asyncDrive(QLength distance, unsigned int drive_options);
   extern void asyncTurn(QAngle angle);
@@ -23,6 +19,7 @@ namespace global{
   extern void asyncApproach(QLength gap, bool top, unsigned int drive_options);
   extern void update_encoder(void* param);
   extern void setEncoderAsync();
+  extern void asyncDrive(QLength distance, unsigned int drive_options, double vel_multiplier);
 
 }
 #endif
