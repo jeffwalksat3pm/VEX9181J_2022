@@ -5,7 +5,6 @@ using namespace okapi::literals;
 void redAMinor();
 void AMajor();
 void BMajor();
-void BMajorPlus();
 void BMajorCore();
 void skills();
 
@@ -14,10 +13,9 @@ void autonomous()
   // AMajor();
   // redAMinor();
 
-  // BMajor();
-  // BMajorPlus();
+  BMajor();
 
-  skills();
+  // skills();
 
   while(1){
     pros::delay(100);
@@ -26,13 +24,16 @@ void autonomous()
   }
 
   void skills(){
+    backOut();
+    frontOut();
+    pros::delay(300);
     asyncDrive(-6_in,0);
     pros::delay(500);
     backIn();//red1
     waitUntilDriveComplete();
     driveWithLeft(15_in);
     pros::delay(300);
-    turnTo(96_deg,1);
+    turnTo(97_deg,1);
     pros::delay(200);
     // driveAndIntake(50_in, 1);
     motor_frontLift->moveVelocity(-20);
@@ -43,9 +44,9 @@ void autonomous()
     waitUntilDriveComplete();
     liftUp();
     conveyerUp();
-    drive(33.5_in,3);
+    drive(33_in,3);//////////////
     conveyerUp();
-    turnTo(183_deg,1);
+    turnTo(180_deg,1);/////////////////
     driveLeft->moveVelocity(80);
     driveRight->moveVelocity(80);
     pros::delay(2450);
@@ -63,13 +64,14 @@ void autonomous()
     // pros::delay(20000);
     motor_conveyer->moveVelocity(0);
 
-    drive(6.5_in,3);
+    drive(5.5_in,3);
+    pros::delay(200);
     turnTo(85_deg,0);
     pros::delay(200);
-    motor_frontLift->moveVelocity(20);
+    motor_frontLift->moveVelocity(40);
     driveLeft->moveVelocity(140);
     driveRight->moveVelocity(140);
-    pros::delay(700);
+    pros::delay(800);
     driveLeft->moveVelocity(40);
     driveRight->moveVelocity(40);
     pros::delay(800);
@@ -100,7 +102,7 @@ void autonomous()
     motor_frontLift->moveVelocity(20);
     driveLeft->moveVelocity(55);
     driveRight->moveVelocity(55);
-    pros::delay(2000);
+    pros::delay(2300);
     stop();
     frontOut();//score red1
     pros::delay(200);
@@ -212,6 +214,7 @@ void autonomous()
 
 
   void AMajor(){
+    frontOut();
     motor_frontLift->moveVelocity(-20);
     driveLeft->moveVelocity(195);
     driveRight->moveVelocity(200);
@@ -224,10 +227,12 @@ void autonomous()
 
     drive(-32_in);
     frontOut();
+    backOut();
+    pros::delay(300);
     drive(-4_in);
     // pros::delay(200);
     driveWithLeft(-44_in);
-    drive(-5_in);
+    drive(-9_in);
     backIn();
     conveyerUp();
     liftUp();
@@ -235,7 +240,7 @@ void autonomous()
     drive(23_in);
     stop();
     pros::delay(200);
-    for(int i = 0; i<3;i++){
+    for(int i = 0; i < 2 ;i++){
       conveyerDown();
       driveLeft->moveVelocity(-80);
       driveRight->moveVelocity(-80);
@@ -258,14 +263,13 @@ void autonomous()
     stop();
     pros::delay(200);
     backOut();
-    driveLeft->moveVelocity(80);
-    driveRight->moveVelocity(80);
-    pros::delay(670);
-    stop();
-    pros::delay(200);
+    drive(3_in,0);
   }
 
   void redAMinor(){
+    frontOut();
+    backOut();
+    pros::delay(300);
     drive(-6_in);
     pros::delay(370);
     backIn();
@@ -304,11 +308,13 @@ void autonomous()
   }
 
   void BMajorCore(){
+    frontOut();
     motor_frontLift->moveVelocity(-20);
-    asyncDrive(44_in, 0);
-    waitUntilReach(4.3_cm, 0);
+    asyncDrive(44.2_in, 1);
+    // waitUntilReach(3.6_cm, 0);
+    waitUntilTravel(42_in);
     frontIn();
-
+    waitUntilDriveComplete();
 
     // driveLeft->moveVelocity(200);
     // driveRight->moveVelocity(200);
@@ -316,6 +322,8 @@ void autonomous()
     // stop();
     // pros::delay(450);
     drive(-21.6_in, 1);
+    backOut();
+    pros::delay(300);
     turnTo(290_deg, 0);
     frontOut();
     pros::delay(100);
@@ -323,8 +331,11 @@ void autonomous()
     driveRight->moveVelocity(-40);
     pros::delay(1400);
     stop();
-    pros::delay(500);
-    backIn();
+    pros::delay(200);
+    piston_rearClinch.set_value(true);
+    //pros::delay(300
+    pros::delay(300);
+    piston_rearFetch.set_value(true);
     pros::delay(200);
     asyncDrive(7_in, 2);
     liftIntake();

@@ -18,6 +18,8 @@ double returnOnlyPostitive(double val);
 double returnOnlyNegative(double val);
 void opcontrol()
 {
+  // backOut();
+  // frontOut();
   //test(); // test function; dead loop
   while (true) {
 
@@ -27,7 +29,7 @@ void opcontrol()
     pros::lcd::set_text(3, std::to_string(encoder_right.get()));
     int i = 0;
     chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.90,
-                              masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.6) ;
+                              masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.65) ;
 
     if (i %20 == 0) {
       masterController->setText(1, 1, std::to_string(encoder_lift.get()));

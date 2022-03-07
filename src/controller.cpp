@@ -16,7 +16,7 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> balanceController;
   std::shared_ptr<okapi::IterativePosPIDController> balanceDriveController;
 //0.000480, -0.0000000, -0.000135
-  okapi::IterativePosPIDController::Gains distance_gain[5] = {{0.000680, -0.000040, -0.000130}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+  okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.000680, -0.000040, -0.000130}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   okapi::IterativePosPIDController::Gains turn_gain = {0.005625, 0.00112500, 0.00001125};
   okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
 

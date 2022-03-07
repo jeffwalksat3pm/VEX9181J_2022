@@ -7,12 +7,15 @@ using namespace global;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-
+	piston_front.set_value(true);
+	piston_rearFetch.set_value(true);
+	piston_rearClinch.set_value(true);
 	configure_device();
 	configure_master();
 	build_component();
 	build_chassis();
 	build_pid();
+
 	// screenInit();
 	pros::lcd::initialize();
 
