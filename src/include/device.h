@@ -23,8 +23,12 @@ namespace global{
   extern okapi::MotorGroup * driveLeft;
   extern okapi::MotorGroup * driveRight;
 
-  extern okapi::IntegratedEncoder drive_encoder_left;
-  extern okapi::IntegratedEncoder drive_encoder_right;
+  extern okapi::IntegratedEncoder drive_encoder_leftBottom;
+  extern okapi::IntegratedEncoder drive_encoder_rightBottom;
+  extern okapi::IntegratedEncoder drive_encoder_leftMid;
+  extern okapi::IntegratedEncoder drive_encoder_rightMid;
+  extern okapi::IntegratedEncoder drive_encoder_leftTop;
+  extern okapi::IntegratedEncoder drive_encoder_rightTop;
   extern okapi::MotorGroup * liftRear;
 // Odometry Sensors(Triport)
   extern okapi::ADIEncoder encoder_left;

@@ -20,13 +20,13 @@ void opcontrol()
 {
   // backOut();
   // frontOut();
-  //test(); // test function; dead loop
+  test(); // test function; dead loop
   while (true) {
 
 
     pros::lcd::set_text(0, "cm:" + std::to_string(distance_top.get()/10.0));
-    pros::lcd::set_text(2, std::to_string(drive_encoder_right.get()));
-    pros::lcd::set_text(3, std::to_string(encoder_right.get()));
+    pros::lcd::set_text(2, std::to_string(getLeftReading()));
+    pros::lcd::set_text(3, std::to_string(getRightReading()));
     int i = 0;
     chassis_odom->getModel()->arcade(masterController->getAnalog(okapi::ControllerAnalog::leftY) * 0.90,
                               masterController->getAnalog(okapi::ControllerAnalog::leftX) * 0.65) ;
@@ -107,15 +107,18 @@ void opcontrol()
     if(rearFetch.changedToPressed()){
       if(isFetch) //toggle: double press button
       {
-        piston_rearFetch.set_value(false);
+        piston_rearFetch.set_value(true);
         pros::delay(200);
         piston_rearClinch.set_value(false);
+
         isFetch = false;
         isClinch = false;
       } else {
+
         piston_rearClinch.set_value(true);
         pros::delay(200);
-        piston_rearFetch.set_value(true);
+        piston_rearFetch.set_value(false);
+
         isFetch = true;
         isClinch = true;
       }
@@ -158,9 +161,9 @@ void opcontrol()
 void test()
 {
   //frontIn();
-  backIn();
-  pros::delay(1000);
-  drive(50_in, 1);
+  // backIn();
+  // pros::delay(1000);
+  drive(50_in, 0);
   // frontIn();
   // drive(-10_in);
   // liftUp();
@@ -180,7 +183,7 @@ void test()
   // pros::lcd::set_text(3, std::to_string(imu.get()));
   // while(1)
   // {
-  //   // pros::lcd::set_text(3, std::to_string(imu.get()));
+  //   pros::lcd::set_text(3, std::to_string(drive_encoder_right.get()));
   //   pros::delay(10);
   // }
   //while(1);

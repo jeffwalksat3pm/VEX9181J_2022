@@ -147,7 +147,7 @@ void autonomous()
 
 
     drive(38_in,2);
-    drive(-19_in,1); //ass
+    drive(-19_in,1);
     liftIntake();
     pros::delay(400);
     turnTo(179_deg,0);

@@ -63,7 +63,29 @@ namespace global{
   //   pros::delay(200);
   //   rearLiftController->tarePosition();
   // }
-
+  void leftReset()
+  {
+    drive_encoder_leftBottom.reset();
+    drive_encoder_leftMid.reset();
+    drive_encoder_leftTop.reset();
+  }
+  void rightReset()
+  {
+    drive_encoder_rightBottom.reset();
+    drive_encoder_rightMid.reset();
+    drive_encoder_rightTop.reset();
+  }
+  void reset()
+  {
+    leftReset();
+    rightReset();
+  }
+  double getLeftReading(){
+    return (drive_encoder_leftBottom.controllerGet() + drive_encoder_leftMid.controllerGet() + drive_encoder_leftTop.controllerGet()) / 3;
+  }
+  double getRightReading(){
+    return (drive_encoder_rightBottom.controllerGet() + drive_encoder_rightMid.controllerGet() + drive_encoder_rightTop.controllerGet()) / 3;
+  }
   void stop()
   {
     // Stop the drivetrain
@@ -74,10 +96,7 @@ namespace global{
 
   void drive(QLength targetDistance)
   {
-    // Reset everything
-    //encoder_right.reset();
-    drive_encoder_left.reset();
-    drive_encoder_right.reset();
+    reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
@@ -106,8 +125,8 @@ namespace global{
       }
       // Get current positions
       double distanceReading =getEncoderReading() - startReading;
-      double leftReading = drive_encoder_left.controllerGet();
-      double rightReading = drive_encoder_right.controllerGet();
+      double leftReading = getLeftReading();
+      double rightReading = getRightReading();
       double diffReading = leftReading - rightReading;
 
       // Get the powers
@@ -157,9 +176,8 @@ namespace global{
     leftDriveController->setGains(distance_gain[withMogo]);
     rightDriveController->setGains(distance_gain[withMogo]);
     // Reset everything
-    //encoder_right.reset();
-    drive_encoder_left.reset();
-    drive_encoder_right.reset();
+    //drive_encoder_right.reset();
+    reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
@@ -211,8 +229,8 @@ namespace global{
       }
       // Get current positions
       double distanceReading =getEncoderReading() - startReading;
-      double leftReading = drive_encoder_left.controllerGet();
-      double rightReading = drive_encoder_right.controllerGet();
+      double leftReading = getLeftReading();
+      double rightReading = getRightReading();
       double diffReading = leftReading - rightReading;
 
       // Get the powers
@@ -254,9 +272,8 @@ namespace global{
   {
     pros::Distance * distance_sensor = &(top ? distance_top : distance_bottom);
     // Reset everything
-    //encoder_right.reset();
-    drive_encoder_left.reset();
-    drive_encoder_right.reset();
+    //drive_encoder_right.reset();
+    reset();
     leftDriveController->reset();
     rightDriveController->reset();
     double startReading = getEncoderReading();
@@ -285,8 +302,8 @@ namespace global{
       }
       // Get current positions
       double distanceReading =getEncoderReading() - startReading;
-      double leftReading = drive_encoder_left.controllerGet();
-      double rightReading = drive_encoder_right.controllerGet();
+      double leftReading = getLeftReading();
+      double rightReading = getRightReading();
       double diffReading = leftReading - rightReading;
 
       // Get the powers
@@ -332,8 +349,7 @@ namespace global{
   }
   void driveIndependent(QLength leftLength, QLength rightLength) {
     // Reset everything
-    drive_encoder_left.reset();
-    drive_encoder_right.reset();
+    reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
@@ -361,8 +377,8 @@ namespace global{
         break;
       }
       // Get current positions
-      double leftReading = drive_encoder_left.controllerGet();
-      double rightReading = drive_encoder_right.controllerGet();
+      double leftReading = getLeftReading();
+      double rightReading = getRightReading();
 
       double diffReading = leftReading - rightReading;
 
@@ -401,7 +417,7 @@ namespace global{
 
   void driveWithLeft(QLength length) {
     // Reset everything
-    drive_encoder_left.controllerGet();
+    leftReset();
     leftDriveController->reset();
 
     // Calculate required amount of degrees to travel
@@ -424,7 +440,7 @@ namespace global{
         break;
       }
       // Get current positions
-      double leftReading = drive_encoder_left.controllerGet();
+      double leftReading = getLeftReading();
 
       // Get the powers
       double leftPower = leftDriveController->step(leftReading);
@@ -458,7 +474,7 @@ namespace global{
   }
   void driveWithRight(QLength length) {
     // Reset everything
-    drive_encoder_right.reset();
+    rightReset();
     rightDriveController->reset();
 
     // Calculate required amount of degrees to travel
@@ -481,7 +497,7 @@ namespace global{
         break;
       }
       // Get current positions
-      double rightReading = drive_encoder_right.controllerGet();
+      double rightReading = getRightReading();
 
       // Get the powers
       double rightPower = rightDriveController->step(rightReading);

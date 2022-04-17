@@ -133,7 +133,7 @@ namespace global{
   {
     while (true)
     {
-      encoder_value = encoder_right.controllerGet();
+      encoder_value = (getLeftReading()  + getRightReading()) / 2;
       pros::delay(20);
     }
   }

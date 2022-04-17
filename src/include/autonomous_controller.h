@@ -1,9 +1,13 @@
-#pragma once
+  #pragma once
 #ifndef _AUTONOMOUS_CONTROLLER_H_
 #define _AUTONOMOUS_CONTROLLER_H_
 
 #include "main.h"
 namespace global{
+
+  extern double getLeftReading();
+  extern double getRightReading();
+
   //front clinch intakes
   extern void frontIn();
   //front clinch outtakes
