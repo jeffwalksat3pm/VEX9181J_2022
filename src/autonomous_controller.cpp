@@ -530,7 +530,7 @@ namespace global{
   {
     // Reset everything
     //gyro.reset();
-    double startValue = imu.get_rotation();
+    double startValue = (imu.get_rotation() + imu2.get_rotation()) / 2;
     turnController->reset();
 
     double degs = targetDegrees.convert(degree);
@@ -545,11 +545,11 @@ namespace global{
     while (true)
     {
       // Get current gyro value
-      double currentValue = (imu.get_rotation()) - startValue;
+      double currentValue = ((imu.get_rotation() + imu2.get_rotation()) / 2) - startValue;
 
       double error = degs - currentValue;
 
-      bool ok = abs(error) < 4.0;
+      bool ok = abs(error) < 1.0;
       if(ok && timeWhenOk == -1) {
         timeWhenOk = pros::millis();
       }

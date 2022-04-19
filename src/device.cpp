@@ -38,7 +38,7 @@ namespace global{
   okapi::RotationSensor tracking_wheel = okapi::RotationSensor(18);
 
   pros::IMU imu(8);
-  pros::IMU imu_backup(9);
+  pros::IMU imu2(9);
   //expander port 4
   pros::ADIDigitalOut piston_front({{4, 'H'}});
   pros::ADIDigitalOut piston_rearFetch({{4, 'A'}});

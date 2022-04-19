@@ -16,9 +16,10 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> balanceController;
   std::shared_ptr<okapi::IterativePosPIDController> balanceDriveController;
 //0.000480, -0.0000000, -0.000135
-okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00045, -0.000030, -0.0001}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00045, -0.000030, -0.00010}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   // okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00050, -0.000060, -0.000090}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
-  okapi::IterativePosPIDController::Gains turn_gain = {0.005625, 0.00112500, 0.00001125};
+  okapi::IterativePosPIDController::Gains turn_gain = {0.0, 0.0, 0.0};
+  //okapi::IterativePosPIDController::Gains turn_gain = {0.005625, 0.00112500, 0.00001125};
   // okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
    okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
 
@@ -64,7 +65,8 @@ okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00045, -0.000030,
     balanceController->setControllerSetTargetLimits(0.9, 0.9);
     turnController =
         //std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.010000, 0.002080, 0.000020));
-        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.005625, 0.00112500, 0.00001125));
+        //posPID(0.005625, 0.00112500, 0.00001125)
+        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0060, 0.000160, -0.000120));
     turnController->setControllerSetTargetLimits(0.8, 0.8);
     // Set output limits for controllers
     leftDriveController->setOutputLimits(1.0, -1.0);

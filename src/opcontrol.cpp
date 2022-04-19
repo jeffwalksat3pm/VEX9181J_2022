@@ -162,8 +162,8 @@ void test()
 {
   //frontIn();
   // backIn();
-  // pros::delay(1000);
-  drive(50_in, 0);
+  // pros::delay(1000)  ;
+  turn(180_deg);
   // frontIn();
   // drive(-10_in);
   // liftUp();

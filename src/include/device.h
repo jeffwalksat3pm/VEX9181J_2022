@@ -45,6 +45,7 @@ namespace global{
   extern pros::ADIDigitalOut piston_rearFetch;
   extern pros::ADIDigitalOut piston_rearClinch;
   extern pros::IMU imu;
+  extern pros::IMU imu2;
 
   extern void configure_device();
 }
