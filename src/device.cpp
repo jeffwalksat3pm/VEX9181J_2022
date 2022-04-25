@@ -13,8 +13,8 @@ namespace global{
 
   // okapi::Motor * motor_rearLiftLeft = new okapi::Motor(2, 0, gearset_lift, DEG);
   // okapi::Motor * motor_rearLiftRight = new okapi::Motor(4, 1, gearset_lift, DEG);
-  okapi::Motor * motor_frontLift = new okapi::Motor(2, 1, gearset_lift, DEG);
-  okapi::Motor * motor_conveyer = new okapi::Motor(1, 1, gearset_conveyer, DEG);
+  okapi::Motor * motor_frontLift = new okapi::Motor(21, 1, gearset_lift, DEG);
+  okapi::Motor * motor_conveyer = new okapi::Motor(1, 0, gearset_conveyer, DEG);
   okapi::MotorGroup * driveRight = new okapi::MotorGroup({*motor_topRight, *motor_midRight, *motor_bottomRight});
   okapi::MotorGroup * driveLeft = new okapi::MotorGroup({*motor_topLeft, *motor_midLeft, *motor_bottomLeft});
 

@@ -96,7 +96,7 @@ namespace global{
 
   void drive(QLength targetDistance)
   {
-    reset();
+    // reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
@@ -177,7 +177,7 @@ namespace global{
     rightDriveController->setGains(distance_gain[withMogo]);
     // Reset everything
     //drive_encoder_right.reset();
-    reset();
+    //reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
@@ -273,7 +273,7 @@ namespace global{
     pros::Distance * distance_sensor = &(top ? distance_top : distance_bottom);
     // Reset everything
     //drive_encoder_right.reset();
-    reset();
+    // reset();
     leftDriveController->reset();
     rightDriveController->reset();
     double startReading = getEncoderReading();
@@ -349,7 +349,7 @@ namespace global{
   }
   void driveIndependent(QLength leftLength, QLength rightLength) {
     // Reset everything
-    reset();
+    // reset();
     leftDriveController->reset();
     rightDriveController->reset();
 
