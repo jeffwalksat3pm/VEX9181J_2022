@@ -164,17 +164,17 @@ namespace global{
   }
   void drive(QLength targetDistance, unsigned int withMogo)
   {
-    leftDriveController->setGains(distance_gain[withMogo]);
-    rightDriveController->setGains(distance_gain[withMogo]);
+    leftDriveController->setGains(left_gain[withMogo]);
+    rightDriveController->setGains(right_gain[withMogo]);
     drive(targetDistance);
-    leftDriveController->setGains(distance_gain[0]);
-    rightDriveController->setGains(distance_gain[0]);
+    leftDriveController->setGains(left_gain[0]);
+    rightDriveController->setGains(right_gain[0]);
   }
   void driveAndIntake(QLength targetDistance, unsigned int withMogo)
   {
     withMogo = withMogo >= 2 ? 1 : withMogo;
-    leftDriveController->setGains(distance_gain[withMogo]);
-    rightDriveController->setGains(distance_gain[withMogo]);
+    leftDriveController->setGains(left_gain[withMogo]);
+    rightDriveController->setGains(right_gain[withMogo]);
     // Reset everything
     //drive_encoder_right.reset();
     //reset();
@@ -223,8 +223,8 @@ namespace global{
           frontLiftController->setTarget(80);
           timeArrive = -1;
           isIn = 1;
-          leftDriveController->setGains(distance_gain[3]);
-          rightDriveController->setGains(distance_gain[3]);
+          leftDriveController->setGains(left_gain[3]);
+          rightDriveController->setGains(right_gain[3]);
         }
       }
       // Get current positions
@@ -265,8 +265,8 @@ namespace global{
     }
     // Stop the drives
     stop();
-    leftDriveController->setGains(distance_gain[0]);
-    rightDriveController->setGains(distance_gain[0]);
+    leftDriveController->setGains(left_gain[0]);
+    rightDriveController->setGains(right_gain[0]);
   }
   void driveAndApproach(QLength targetDistance, bool top)
   {
@@ -341,11 +341,11 @@ namespace global{
   }
   void driveAndApproach(QLength targetDistance, bool top, unsigned int withMogo)
   {
-    leftDriveController->setGains(distance_gain[withMogo]);
-    rightDriveController->setGains(distance_gain[withMogo]);
+    leftDriveController->setGains(left_gain[withMogo]);
+    rightDriveController->setGains(right_gain[withMogo]);
     driveAndApproach(targetDistance, top);
-    leftDriveController->setGains(distance_gain[0]);
-    rightDriveController->setGains(distance_gain[0]);
+    leftDriveController->setGains(left_gain[0]);
+    rightDriveController->setGains(right_gain[0]);
   }
   void driveIndependent(QLength leftLength, QLength rightLength) {
     // Reset everything

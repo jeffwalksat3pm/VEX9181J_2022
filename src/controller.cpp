@@ -7,7 +7,7 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> rightDriveController;
   std::shared_ptr<okapi::IterativePosPIDController> straightDriveController;
 
-  std::shared_ptr<okapi::IterativePosPIDController> turnController;
+  std::shared_ptr<okapi::IterativePosPIDController > turnController;
 
   std::shared_ptr<okapi::AsyncPositionController<double, double>> rearLiftController;
   std::shared_ptr<okapi::AsyncPositionController<double, double>> frontLiftController;
@@ -16,7 +16,8 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> balanceController;
   std::shared_ptr<okapi::IterativePosPIDController> balanceDriveController;
 //0.000480, -0.0000000, -0.000135
-okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.000370, -0.000010, -0.0001}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+okapi::IterativePosPIDController::Gains left_gain[4] = {{0.000370, -0.000010, -0.00015}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+okapi::IterativePosPIDController::Gains right_gain[4] = {{0.000370, -0.000010, -0.00015}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   // okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00050, -0.000060, -0.000090}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   // okapi::IterativePosPIDController::Gains turn_gain = {0.0, 0.0, 0.0};
   okapi::IterativePosPIDController::Gains turn_gain = {0.0060, 0.000160, -0.000120};
@@ -29,7 +30,7 @@ okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.000370, -0.000010
     //.withMotors({*motor_topLeft, *motor_midLeft, *motor_bottomLeft}, {*motor_topRight, *motor_midRight, *motor_bottomRight})
     .withMotors(*driveLeft, *driveRight)
     .withDimensions(gearset_chassis, scale_chassis)
-    .withGains(distance_gain[0], turn_gain, angle_gain)
+    .withGains(left_gain[0], turn_gain, angle_gain)
     .withOdometry(scale_tracking, okapi::StateMode::CARTESIAN)
     //.withSensors(encoder_left, encoder_right, encoder_middle)
     //.withSensors( okapi::ADIEncoder({6, 5, 6}, false), okapi::ADIEncoder({6, 1,2 }, false))

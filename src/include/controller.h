@@ -15,7 +15,8 @@ namespace global{
   extern std::shared_ptr<okapi::AsyncPositionController<double, double>> conveyerController;
   extern std::shared_ptr<okapi::IterativePosPIDController> balanceController;
 
-  extern okapi::IterativePosPIDController::Gains distance_gain[];
+  extern okapi::IterativePosPIDController::Gains left_gain[];
+  extern okapi::IterativePosPIDController::Gains right_gain[];
   extern okapi::IterativePosPIDController::Gains turn_gain;
   extern okapi::IterativePosPIDController::Gains angle_gain;
 
