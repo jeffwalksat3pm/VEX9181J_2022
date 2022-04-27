@@ -163,10 +163,11 @@ void test()
   //frontIn();
   // backIn();
   // pros::delay(1000)  ;
-
+  turn(90_deg);
   // drive(20_in, 0);
   // pros::delay(1000);
-  drive(30_in, 0);
+  // drive(30_in, 0);
+  // drive(-30_in, 0);
   // drive(-40_in, 0);
   // frontIn();
   // drive(-10_in);

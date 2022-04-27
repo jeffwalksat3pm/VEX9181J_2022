@@ -8,6 +8,7 @@ namespace global{
   extern double getLeftReading();
   extern double getRightReading();
 
+  extern void configureDrive(unsigned int withMogo = 0);
   //front clinch intakes
   extern void frontIn();
   //front clinch outtakes

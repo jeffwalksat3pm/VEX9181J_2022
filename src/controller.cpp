@@ -16,13 +16,13 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> balanceController;
   std::shared_ptr<okapi::IterativePosPIDController> balanceDriveController;
 //0.000480, -0.0000000, -0.000135
-okapi::IterativePosPIDController::Gains left_gain[4] = {{0.000370, -0.000010, -0.00015}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
-okapi::IterativePosPIDController::Gains right_gain[4] = {{0.000370, -0.000010, -0.00015}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+okapi::IterativePosPIDController::Gains right_gain[4] = {{0.000370, -0.000060, -0.00012}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
+okapi::IterativePosPIDController::Gains left_gain[4] = {{0.000370, -0.000060, -0.00012}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   // okapi::IterativePosPIDController::Gains distance_gain[4] = {{0.00050, -0.000060, -0.000090}, {0.001040, -0.000005, -0.000050}, {0.001300, -0.000010, -0.000020}, {0.000370, -0.000010, -0.00020}};
   // okapi::IterativePosPIDController::Gains turn_gain = {0.0, 0.0, 0.0};
-  okapi::IterativePosPIDController::Gains turn_gain = {0.0060, 0.000160, -0.000120};
+  okapi::IterativePosPIDController::Gains turn_gain = {0.0055, 0.0002, -0.00016};
   // okapi::IterativePosPIDController::Gains angle_gain = {0.000001, 0.0, 0.0000001};
-   okapi::IterativePosPIDController::Gains angle_gain = {0.00005, 0.0, 0.000001};
+   okapi::IterativePosPIDController::Gains angle_gain = {0.000003, 0.0000001, 0.0000005};
 
   void build_chassis()
   {
@@ -47,36 +47,32 @@ okapi::IterativePosPIDController::Gains right_gain[4] = {{0.000370, -0.000010, -
   }
   void build_pid()
   {
-    // const double drivingKp = 0.00045;
-    // const double drivingKi = -0.000030;
-    // const double drivingKd = -0.00010;
-    const double drivingKp = 0.000370;
-    const double drivingKi = -0.000010;
-    const double drivingKd = -0.0001;
+    const double drivingKp = 0.0;
+    const double drivingKi = -0.0;
+    const double drivingKd = -0.0;
     leftDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
-    leftDriveController->setControllerSetTargetLimits(0.95, 0.95);
     rightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
-    rightDriveController->setControllerSetTargetLimits(0.95, 0.95);
-    balanceDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
-    balanceDriveController->setControllerSetTargetLimits(0.6, 0.6);
-    //straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0001, 0.0, 0.00001));
-    //straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.000065, 0.0, 0.000008));
-    straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.00001, 0.0, 0.000001));
-    balanceController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.1, 0.0001, 0.001));
-    balanceController->setControllerSetTargetLimits(0.9, 0.9);
+    configureDrive(0);
+    leftDriveController->setControllerSetTargetLimits(0.9, -0.85);
+    rightDriveController->setControllerSetTargetLimits(0.8925, -0.837);
+
+    // balanceDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
+    // balanceDriveController->setControllerSetTargetLimits(0.6, 0.6);
+
+    straightDriveController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
+    straightDriveController->setGains(angle_gain);
+    // balanceController = std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.1, 0.0001, 0.001));
+    // balanceController->setControllerSetTargetLimits(0.9, 0.9);
     turnController =
-        //std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.010000, 0.002080, 0.000020));
-        //posPID(0.005625, 0.00112500, 0.00001125)
-        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(0.0060, 0.000160, -0.000120));
-    turnController->setControllerSetTargetLimits(0.8, 0.8);
+        std::make_shared<okapi::IterativePosPIDController>(okapi::IterativeControllerFactory::posPID(drivingKp, drivingKi, drivingKd));
+    turnController->setGains(turn_gain);
+    turnController->setControllerSetTargetLimits(1.0, -1.0);
     // Set output limits for controllers
-    leftDriveController->setOutputLimits(1.0, -1.0);
-    rightDriveController->setOutputLimits(1.0, -1.0);
     turnController->setOutputLimits(1.0, -1.0);
+
   }
   void build_component()
   {
-    //rearLiftController = okapi::AsyncPosControllerBuilder().withMotor(*motor_rear).withMaxVelocity(100).withGearset(gearset_lift).build();
     frontLiftController = okapi::AsyncPosControllerBuilder().withMotor(*motor_frontLift).withSensor(std::make_shared<okapi::RotationSensor>(encoder_lift)).withMaxVelocity(100).withGearset(gearset_lift).build();
     conveyerController = okapi::AsyncPosControllerBuilder().withMotor(*motor_conveyer).withMaxVelocity(600).withGearset(gearset_conveyer).build();
   }

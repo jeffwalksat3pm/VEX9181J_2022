@@ -63,6 +63,10 @@ namespace global{
   //   pros::delay(200);
   //   rearLiftController->tarePosition();
   // }
+  double getHorizontalReading()
+  {
+    return tracking_wheel.controllerGet();
+  }
   void leftReset()
   {
     drive_encoder_leftBottom.reset();
@@ -93,7 +97,11 @@ namespace global{
     driveRight->controllerSet(0.0);
   }
 
-
+  void configureDrive(unsigned int withMogo)
+  {
+    leftDriveController->setGains(left_gain[withMogo]);
+    rightDriveController->setGains(right_gain[withMogo]);
+  }
   void drive(QLength targetDistance)
   {
     // reset();
@@ -101,6 +109,7 @@ namespace global{
     rightDriveController->reset();
 
     double startReading = getEncoderReading();
+    double trackingReading = getHorizontalReading();
     // Calculate required amount of degrees to travel
     double cm = targetDistance.convert(centimeter);
     double degrees = (cm / circumference) * 360.0;
@@ -127,7 +136,7 @@ namespace global{
       double distanceReading =getEncoderReading() - startReading;
       double leftReading = getLeftReading();
       double rightReading = getRightReading();
-      double diffReading = leftReading - rightReading;
+      double diffReading = getHorizontalReading() - trackingReading;
 
       // Get the powers
       double leftPower = leftDriveController->step(distanceReading);
@@ -164,11 +173,9 @@ namespace global{
   }
   void drive(QLength targetDistance, unsigned int withMogo)
   {
-    leftDriveController->setGains(left_gain[withMogo]);
-    rightDriveController->setGains(right_gain[withMogo]);
+    configureDrive(withMogo);
     drive(targetDistance);
-    leftDriveController->setGains(left_gain[0]);
-    rightDriveController->setGains(right_gain[0]);
+    configureDrive(0);
   }
   void driveAndIntake(QLength targetDistance, unsigned int withMogo)
   {

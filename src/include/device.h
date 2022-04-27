@@ -40,6 +40,7 @@ namespace global{
   extern pros::Distance distance_top;
   extern pros::Distance distance_bottom;
   extern okapi::RotationSensor frontLift_sensor;
+  extern okapi::RotationSensor tracking_wheel;
 // PROS Sensors
   extern pros::ADIDigitalOut piston_front;
   extern pros::ADIDigitalOut piston_rearFetch;
