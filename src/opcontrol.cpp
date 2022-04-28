@@ -20,6 +20,8 @@ void opcontrol()
 {
   // backOut();
   // frontOut();
+  frontOut();
+  backOut();
   test(); // test function; dead loop
   while (true) {
 
@@ -162,8 +164,34 @@ void test()
 {
   //frontIn();
   // backIn();
-  // pros::delay(1000)  ;
-  turn(90_deg);
+  // pros::delay(1000);
+  driveLeft->moveVelocity(200);
+  pros::delay(15);
+  driveRight->moveVelocity(200);
+  pros::delay(1100);
+  frontIn();
+  pros::delay(20);
+  stop();
+  asyncDrive(-72_in,1);
+  pros::delay(1000);
+  frontOut();
+  waitUntilDriveComplete();
+  turn(-92_deg);
+  drive(-25_in);
+  backIn();
+  liftIntake();
+  /*
+  conveyerUp();
+  for(int i = 0; i < 3; i++){
+    driveLeft->moveVelocity(80);
+    driveRight->moveVelocity(80);
+    pros::delay(1000);
+    driveLeft->moveVelocity(-80);
+    driveRight->moveVelocity(-80);
+    pros::delay(1000);
+  }
+  */
+  while(1);
   // drive(20_in, 0);
   // pros::delay(1000);
   // drive(30_in, 0);

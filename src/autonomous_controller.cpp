@@ -18,12 +18,12 @@ namespace global{
     piston_rearClinch.set_value(true);
     //pros::delay(300
     pros::delay(500);
-    piston_rearFetch.set_value(true);
+    piston_rearFetch.set_value(false);
     pros::delay(100);
   }
   void backOut()
   {
-    piston_rearFetch.set_value(false);
+    piston_rearFetch.set_value(true);
     pros::delay(200);
     piston_rearClinch.set_value(false);
     pros::delay(100);

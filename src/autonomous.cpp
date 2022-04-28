@@ -7,6 +7,8 @@ void AMajor();
 void BMajor();
 void BMajorCore();
 void skills();
+void leftRush();
+void rightRush();
 
 void autonomous()
 {
@@ -357,6 +359,29 @@ void autonomous()
     stop();
     backOut();
     drive(5_in);
+  }
+
+  void leftRush(){
+    
+  }
+
+  void rightRush(){
+    drive(70_in,0);
+    frontOut();
+    drive(-30_in,1);
+    pros::delay(500);
+    turn(-90_deg);
+    pros::delay(250);
+    drive(-30_in,1);
+    backOut();
+    drive(20_in,2);
+    turn(90_deg);
+    pros::delay(500);
+    drive(50_in,2);
+    pros::delay(250);
+    turn(180_deg);
+    pros::delay(250);
+    drive(50_in,2);
   }
 
   void BMajorPlus(){

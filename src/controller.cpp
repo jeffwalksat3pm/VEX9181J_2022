@@ -7,7 +7,7 @@ namespace global{
   std::shared_ptr<okapi::IterativePosPIDController> rightDriveController;
   std::shared_ptr<okapi::IterativePosPIDController> straightDriveController;
 
-  std::shared_ptr<okapi::IterativePosPIDController > turnController;
+  std::shared_ptr<okapi::IterativePosPIDController> turnController;
 
   std::shared_ptr<okapi::AsyncPositionController<double, double>> rearLiftController;
   std::shared_ptr<okapi::AsyncPositionController<double, double>> frontLiftController;
